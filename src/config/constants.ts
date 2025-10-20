@@ -10,3 +10,4 @@ export const PUBLIC_PATH_PREFIXES = [
 export const ROUTE_PERMISSIONS: Record<string, Role[]> = {
   "/dashboard": [Role.ADMIN],
 };
+export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3004";
