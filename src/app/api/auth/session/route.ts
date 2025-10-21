@@ -65,3 +65,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unexpected error" }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  const response = NextResponse.json({ ok: true });
+  response.cookies.delete({ name: AUTH_COOKIE_NAME, path: "/" });
+  return response;
+}

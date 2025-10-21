@@ -11,3 +11,5 @@ export const ROUTE_PERMISSIONS: Record<string, Role[]> = {
   "/dashboard": [Role.ADMIN],
 };
 export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3004";
+export const BACKEND_FOR_FRONTEND_URL =
+  process.env.BACKEND_FOR_FRONTEND_URL || "http://localhost:3000";
