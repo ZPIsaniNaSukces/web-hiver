@@ -54,7 +54,9 @@ export async function POST(req: NextRequest) {
       name: AUTH_COOKIE_NAME,
       value: encodeURIComponent(JSON.stringify(sessionPayload)),
       httpOnly: true,
-      secure: true,
+      secure:
+        process.env.NODE_ENV === "production" &&
+        process.env.USE_HTTPS === "true",
       sameSite: "lax",
       path: "/",
       expires: refreshExp,
