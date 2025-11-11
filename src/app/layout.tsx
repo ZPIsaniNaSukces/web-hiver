@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 
+import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/lib/query-client";
 
 import "./globals.css";
@@ -22,11 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <QueryProvider>
-        <body className={`${manrope.variable} font-sans antialiased`}>
-          {children}
-        </body>
-      </QueryProvider>
+      <body className={`${manrope.variable} font-sans antialiased`}>
+        <QueryProvider>{children}</QueryProvider>
+        <Toaster position="top-right" />
+      </body>
     </html>
   );
 }

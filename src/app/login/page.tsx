@@ -12,11 +12,11 @@ export default function LoginPage() {
           fill
           priority
           className="object-contain object-center select-none"
-          style={{ transform: "translate(-30%, 15%) scale(1.5)" }}
+          style={{ transform: "translate(-40%, 10%) scale(1.8)" }}
         />
       </div>
 
-      <div className="relative z-10 flex w-full items-center justify-center px-6 py-10 lg:justify-end lg:px-20 lg:py-0">
+      <div className="relative z-10 flex w-full items-center justify-center py-10 lg:justify-end lg:px-20 lg:py-0">
         <div className="flex w-full max-w-md flex-col items-center gap-6 p-8 text-center lg:ml-auto">
           <Image
             src="/logo.svg"
@@ -24,7 +24,7 @@ export default function LoginPage() {
             width={280}
             height={180}
             priority
-            className="h-auto w-40 md:w-56"
+            className="h-auto w-56 md:w-64"
           />
           <AuthForm />
         </div>

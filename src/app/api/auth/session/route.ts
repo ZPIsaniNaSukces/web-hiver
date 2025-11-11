@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { parse } from "path";
 
 import { AUTH_COOKIE_NAME, BACKEND_URL } from "@/config/constants";
+import { parseCookie } from "@/lib/cookie-utils";
 import { ErrorBody, LoginResponse } from "@/types/auth-types";
 
 export async function POST(req: NextRequest) {
@@ -33,21 +35,13 @@ export async function POST(req: NextRequest) {
     const sessionPayload = {
       accessToken: body.accessToken,
       refreshToken: body.refreshToken,
-      user: {
-        id: body.user.id.toString(),
-        email: body.user.email,
-        roles: [body.user.role],
-      },
+      user: body.user,
       expires: accessExpMs,
     };
 
     const response = NextResponse.json({
       ok: true,
-      user: {
-        id: sessionPayload.user.id,
-        email: sessionPayload.user.email,
-        roles: sessionPayload.user.roles,
-      },
+      user: sessionPayload.user,
     });
 
     response.cookies.set({
@@ -70,4 +64,16 @@ export async function DELETE(req: NextRequest) {
   const response = NextResponse.json({ ok: true });
   response.cookies.delete({ name: AUTH_COOKIE_NAME, path: "/" });
   return response;
+}
+
+export async function GET(req: NextRequest) {
+  const rawCookie = req.cookies.get(AUTH_COOKIE_NAME)?.value;
+  if (!rawCookie) {
+    return NextResponse.json({ error: "No active session" }, { status: 401 });
+  }
+  const session = parseCookie(rawCookie);
+  if (!session) {
+    return NextResponse.json({ error: "Invalid session" }, { status: 401 });
+  }
+  return NextResponse.json({ ok: true, user: session.user });
 }

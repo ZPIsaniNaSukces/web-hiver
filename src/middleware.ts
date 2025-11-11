@@ -5,6 +5,7 @@ import {
   PUBLIC_PATH_PREFIXES,
   ROUTE_PERMISSIONS,
 } from "./config/constants";
+import { parseCookie } from "./lib/cookie-utils";
 import { SessionPayload } from "./types/auth-types";
 
 function isPublicPath(pathname: string) {
@@ -13,24 +14,13 @@ function isPublicPath(pathname: string) {
   );
 }
 
-function parseCookie(raw: string | undefined): SessionPayload | null {
-  if (!raw) return null;
-  try {
-    const decoded = JSON.parse(decodeURIComponent(raw)) as SessionPayload;
-    if (!decoded.accessToken) return null;
-    return decoded;
-  } catch {
-    return null;
-  }
-}
-
 function hasAccess(pathname: string, session: SessionPayload | null): boolean {
   if (isPublicPath(pathname)) return true;
   const required = ROUTE_PERMISSIONS[pathname] ?? [];
   if (!session) return false;
   if (required.length === 0) return true;
-  const roles = session.user?.roles ?? [];
-  return required.some((role) => roles.includes(role));
+  const userRole = session.user?.role;
+  return userRole ? required.includes(userRole) : false;
 }
 
 export const middleware = (request: NextRequest) => {
