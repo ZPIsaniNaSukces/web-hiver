@@ -20,10 +20,10 @@ export function useAuth() {
   const sessionQuery = useQuery<User, AuthError>({
     queryKey: AUTH_QK,
     queryFn: async () => {
-      const { data } = await clientFetch<{ ok: true; data: User }>(
+      const { data } = await clientFetch<{ ok: true; user: User }>(
         "/api/auth/session",
       );
-      return data.data;
+      return data.user;
     },
     staleTime: 60_000,
     gcTime: 600_000,
@@ -43,7 +43,7 @@ export function useAuth() {
     mutationFn: async (input: LoginInput) => {
       setUserOptimistic(null);
 
-      const res = await clientFetch<{ ok: true; data: User }>(
+      const res = await clientFetch<{ ok: true; user: User }>(
         "/api/auth/session",
         {
           method: "POST",
@@ -52,7 +52,7 @@ export function useAuth() {
         },
       );
 
-      return res.data.data;
+      return res.data.user;
     },
     onSuccess: (newUser) => {
       setUser(newUser);
