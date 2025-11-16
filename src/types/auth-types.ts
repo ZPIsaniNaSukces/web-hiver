@@ -1,3 +1,5 @@
+import z from "zod";
+
 import { Role } from "@/config/enums";
 
 type SessionPayload = {
@@ -7,13 +9,15 @@ type SessionPayload = {
   expires: number;
 };
 
-type User = {
+export type User = {
   id: string;
+  name: string;
+  surname: string;
   email: string;
-  name?: string;
-  secondName?: string;
-  image?: string;
-  roles: Role[];
+  role: Role;
+  phone: string | null;
+  teamIds: number[];
+  companyId: number;
 };
 
 export type LoginResponse = {
@@ -21,16 +25,7 @@ export type LoginResponse = {
   accessTokenExpiresAt: string;
   refreshToken: string;
   refreshTokenExpiresAt: string;
-  user: {
-    id: number;
-    name: string;
-    surname: string;
-    email: string;
-    role: Role;
-    phone: string | null;
-    teamId: number;
-    companyId: number;
-  };
+  user: User;
 };
 
 export type { SessionPayload };
@@ -45,3 +40,15 @@ export type ErrorBody = {
   error?: string;
   statusCode?: number;
 };
+
+export type SessionGetResponse =
+  | { isAuthenticated: false }
+  | { isAuthenticated: true; user: User };
+
+export const LoginSchema = z.object({
+  email: z.string().email("Podaj poprawny adres e-mail"),
+  password: z.string().min(1, "Hasło jest wymagane"),
+});
+
+export type LoginValues = z.infer<typeof LoginSchema>;
+export type ApiError = { error: string; status: number };
