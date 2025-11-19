@@ -8,9 +8,9 @@ import { toast } from "sonner";
 
 import { useAuth } from "@/app/login/hooks/useAuth";
 
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import { MobileNavbar } from "./mobile-navbar/mobile-navbar";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
 
 export const TopNavbar = () => {
   const pathname = usePathname();

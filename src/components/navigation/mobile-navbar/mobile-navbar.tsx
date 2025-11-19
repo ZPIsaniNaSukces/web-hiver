@@ -7,8 +7,6 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-import { NAV_ITEMS } from "../side-navbar/config";
-import { NavItem } from "../side-navbar/types";
 import {
   Sheet,
   SheetContent,
@@ -16,7 +14,9 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet";
+} from "../../ui/sheet";
+import { NAV_ITEMS } from "../side-navbar/config";
+import { NavItem } from "../side-navbar/types";
 
 export const MobileNavbar = () => {
   const pathname = usePathname();

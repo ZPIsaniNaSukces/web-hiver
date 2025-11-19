@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 
-import SideDock from "@/components/side-navbar/side-navbar";
-import { TopNavbar } from "@/components/top-navbar";
+import SideDock from "@/components/navigation/side-navbar/side-navbar";
+import { TopNavbar } from "@/components/navigation/top-navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryProvider } from "@/lib/query-client";
 
