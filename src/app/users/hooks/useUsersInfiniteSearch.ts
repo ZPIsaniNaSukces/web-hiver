@@ -24,7 +24,7 @@ function buildUrl(
 }
 
 export function useUsersInfiniteSearch(search: string) {
-  const limit = 1;
+  const limit = 10;
 
   return useInfiniteQuery<
     ApiSuccess<UsersPage>,

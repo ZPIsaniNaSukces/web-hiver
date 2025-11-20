@@ -4,7 +4,7 @@ import { AuthForm } from "./components/auth-form";
 
 export default function LoginPage() {
   return (
-    <div className="relative flex min-h-screen w-full overflow-hidden">
+    <div className="fixed inset-0 z-0 flex min-h-screen w-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 hidden lg:block">
         <Image
           src="/login-deco.png"
