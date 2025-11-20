@@ -24,8 +24,8 @@ export default function SideDock() {
 
   return (
     <aside
-      className="fixed top-32 left-1/2 z-30 hidden w-full max-w-6xl -translate-x-1/2 px-4 md:block"
       aria-label="Nawigacja boczna"
+      className="fixed top-32 left-6 hidden md:block"
     >
       <nav className="flex flex-col gap-6">
         {NAV_GROUPS.map((group) => (
@@ -61,7 +61,7 @@ function NavPill({
             key={href}
             href={href}
             className={cn(
-              "relative my-2 w-full",
+              "my-2 w-full",
               "rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-black/10",
             )}
             aria-current={isActive ? "page" : undefined}

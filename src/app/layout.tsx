@@ -25,11 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${manrope.variable} font-sans antialiased`}>
+      <body className={`${manrope.variable} mt-28 font-sans antialiased`}>
         <QueryProvider>
           <TopNavbar />
           <SideDock />
-          {children}
+          <main className="md:ml-36">{children}</main>
         </QueryProvider>
         <Toaster position="top-right" />
       </body>

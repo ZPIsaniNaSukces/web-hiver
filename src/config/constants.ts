@@ -8,7 +8,7 @@ export const PUBLIC_PATH_PREFIXES = [
   "/favicon.ico",
 ];
 export const ROUTE_PERMISSIONS: Record<string, Role[]> = {
-  "/dashboard": [Role.ADMIN],
+  "/dashboard": [Role.ADMIN, Role.MANAGER],
 };
 export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
 export const BACKEND_FOR_FRONTEND_URL =
