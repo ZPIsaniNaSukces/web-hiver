@@ -1,14 +1,13 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 
-import { useUserDetails } from "../hooks/useUserDetails";
+import { BackArrow } from "../components/back-arrow";
+import { useUserDetails } from "../hooks/use-user-details";
 import { formatRole, getInitials } from "../utils";
 
 export default function UserDetailsPage() {
@@ -21,12 +20,7 @@ export default function UserDetailsPage() {
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
-      <Button asChild variant="ghost" size="sm" className="w-fit px-2">
-        <Link href="/users" className="flex items-center gap-2">
-          <ArrowLeft className="size-4" />
-          <span>Wróć do listy</span>
-        </Link>
-      </Button>
+      <BackArrow />
 
       <DataStateWrapper
         isLoading={isLoading}

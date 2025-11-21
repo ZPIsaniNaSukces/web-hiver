@@ -25,7 +25,7 @@ export default function SideDock() {
   return (
     <aside
       aria-label="Nawigacja boczna"
-      className="fixed top-32 left-6 hidden md:block"
+      className="fixed top-32 left-6 z-100 hidden md:block"
     >
       <nav className="flex flex-col gap-6">
         {NAV_GROUPS.map((group) => (

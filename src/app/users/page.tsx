@@ -1,13 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useDeferredValue, useRef, useState } from "react";
 import { InView } from "react-intersection-observer";
 
+import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 import { Input } from "@/components/ui/input";
 
 import { UserList } from "./components/user-list";
-import { useUsersInfiniteSearch } from "./hooks/useUsersInfiniteSearch";
+import { useUsersInfiniteSearch } from "./hooks/use-users-infinite-search";
 
 export default function UsersPage() {
   const [search, setSearch] = useState("");
@@ -36,19 +38,25 @@ export default function UsersPage() {
         ref={scrollRef}
         className="mx-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0"
       >
-        <div className="flex max-w-md flex-col gap-2">
-          <Input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Szukaj po imieniu, mailu itd..."
-          />
+        <h1 className="text-2xl font-semibold">Pracownicy</h1>
+        <div className="flex w-full flex-col gap-2">
+          <div className="flex w-full flex-col justify-between gap-4 md:flex-row">
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Szukaj po imieniu, mailu itd..."
+              className="max-w-md"
+            />
+            <Button asChild>
+              <Link href="/users/add">Dodaj</Link>
+            </Button>
+          </div>
           {meta && (
             <span className="text-xs text-gray-500">
               Znaleziono {meta.total} użytkowników
             </span>
           )}
         </div>
-
         <DataStateWrapper
           isLoading={isLoading}
           isError={isError}
