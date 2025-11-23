@@ -7,12 +7,12 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { UserSelect } from "@/components/users/user-select";
 import type { User } from "@/types/auth-types";
 import { CreateUserSchema } from "@/types/user-list-types";
 
 import { BackArrow } from "../components/back-arrow";
 import { useCreateUser } from "../hooks/use-create-user";
-import { BossSelect } from "./components/boss-select";
 
 type FormValues = {
   email: string;
@@ -187,15 +187,18 @@ export default function AddUserPage() {
             <span className="text-sm font-medium text-gray-700">
               Przełożony
             </span>
-            <BossSelect
+            <UserSelect
               value={selectedBoss}
               onChange={handleBossChange}
               disabled={isSubmitting}
               error={errors.bossId}
+              placeholder="Wybierz przełożonego"
+              searchPlaceholder="Szukaj po nazwisku, mailu..."
+              emptyOptionLabel="Brak przełożonego"
             />
             <span className="text-xs text-gray-400">
-              Wybierz przełożonego z listy lub pozostaw puste, jeśli nie
-              dotyczy.
+              Wybierz przełożonego z listy lub pozostaw puste, jeśli jesteś
+              przełożonym.
             </span>
           </div>
         </div>

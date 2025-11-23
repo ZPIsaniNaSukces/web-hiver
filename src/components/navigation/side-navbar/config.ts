@@ -5,6 +5,7 @@ import {
   Home,
   Mail,
   Settings,
+  User,
   Users,
 } from "lucide-react";
 
@@ -15,13 +16,13 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "primary",
     items: [
       { label: "Strona główna", href: "/", icon: Home },
-      { label: "Pracownicy", href: "/users", icon: Users },
+      { label: "Pracownicy", href: "/users", icon: User },
     ],
   },
   {
     id: "work",
     items: [
-      { label: "Wiadomości", href: "/inbox", icon: Mail },
+      { label: "Zespoły", href: "/teams", icon: Users },
       { label: "Zadania", href: "/tasks", icon: ClipboardList },
       { label: "Kalendarz", href: "/calendar", icon: Calendar },
       { label: "Czas pracy", href: "/time", icon: Clock },
