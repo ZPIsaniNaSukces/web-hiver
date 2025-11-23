@@ -16,16 +16,14 @@ import { useCreateUser } from "../hooks/use-create-user";
 
 type FormValues = {
   email: string;
-  companyId: string;
 };
 
-type FormErrors = Partial<Record<"email" | "companyId" | "bossId", string>>;
+type FormErrors = Partial<Record<"email" | "bossId", string>>;
 
 export default function AddUserPage() {
   const router = useRouter();
   const [values, setValues] = useState<FormValues>({
     email: "",
-    companyId: "",
   });
   const [selectedBoss, setSelectedBoss] = useState<User | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -34,7 +32,7 @@ export default function AddUserPage() {
   const isSubmitting = createUserMutation.isPending;
 
   const resetForm = () => {
-    setValues({ email: "", companyId: "" });
+    setValues({ email: "" });
     setSelectedBoss(null);
     setErrors({});
   };
@@ -43,10 +41,6 @@ export default function AddUserPage() {
     event.preventDefault();
 
     const trimmedEmail = values.email.trim();
-    const companyIdNumber =
-      values.companyId.trim() === ""
-        ? Number.NaN
-        : Number(values.companyId.trim());
     const bossIdNumber = selectedBoss ? Number(selectedBoss.id) : undefined;
 
     if (selectedBoss && Number.isNaN(bossIdNumber)) {
@@ -57,7 +51,6 @@ export default function AddUserPage() {
 
     const result = CreateUserSchema.safeParse({
       email: trimmedEmail,
-      companyId: companyIdNumber,
       bossId: bossIdNumber,
     });
 
@@ -65,7 +58,6 @@ export default function AddUserPage() {
       const fieldErrors = result.error.flatten().fieldErrors;
       setErrors({
         email: fieldErrors.email?.[0],
-        companyId: fieldErrors.companyId?.[0],
         bossId: fieldErrors.bossId?.[0],
       });
       toast.error("Popraw błędy w formularzu");
@@ -143,44 +135,6 @@ export default function AddUserPage() {
                 {errors.email}
               </p>
             )}
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <label
-              htmlFor="companyId"
-              className="text-sm font-medium text-gray-700"
-            >
-              Identyfikator firmy*
-            </label>
-            <Input
-              id="companyId"
-              type="number"
-              min={0}
-              step={1}
-              placeholder="np. 123"
-              value={values.companyId}
-              onChange={(event) => {
-                const nextValue = event.target.value;
-                setValues((prev) => ({
-                  ...prev,
-                  companyId: nextValue,
-                }));
-                if (errors.companyId) {
-                  setErrors((prev) => ({ ...prev, companyId: undefined }));
-                }
-              }}
-              aria-invalid={!!errors.companyId}
-              aria-describedby={errors.companyId ? "company-error" : undefined}
-              disabled={isSubmitting}
-            />
-            {errors.companyId && (
-              <p id="company-error" className="text-destructive text-sm">
-                {errors.companyId}
-              </p>
-            )}
-            <p className="text-xs text-gray-400">
-              Wprowadź identyfikator firmy, do której ma należeć pracownik.
-            </p>
           </div>
 
           <div className="flex flex-col gap-1">

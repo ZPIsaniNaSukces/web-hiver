@@ -23,9 +23,5 @@ export const CreateUserSchema = z.object({
     .int("Identyfikator przełożonego musi być liczbą całkowitą")
     .positive("Identyfikator przełożonego musi być dodatni")
     .optional(),
-  companyId: z
-    .number()
-    .int("Identyfikator firmy musi być liczbą całkowitą")
-    .positive("Identyfikator firmy musi być dodatni"),
 });
 export type CreateUserType = z.infer<typeof CreateUserSchema>;
