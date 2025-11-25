@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_COOKIE_NAME, BACKEND_URL } from "@/config/constants";
 import { parseCookie } from "@/lib/cookie-utils";
+import { ErrorBody } from "@/types/auth-types";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const teamId = params.id;
+  const teamId = (await params).id;
 
   if (!teamId) {
     return NextResponse.json({ message: "Missing team id" }, { status: 400 });
@@ -31,6 +32,15 @@ export async function GET(
     },
     cache: "no-store",
   });
+
+  if (!res.ok) {
+    let err: ErrorBody = {};
+    try {
+      err = await res.json();
+    } catch {}
+    const msg = err.message || "Something went wrong";
+    return NextResponse.json({ error: msg }, { status: res.status || 400 });
+  }
 
   const data = await res.json().catch(() => null);
 

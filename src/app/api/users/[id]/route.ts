@@ -5,9 +5,9 @@ import { parseCookie } from "@/lib/cookie-utils";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const userId = params.id;
+  const userId = (await params).id;
 
   if (!userId) {
     return NextResponse.json({ message: "Missing user id" }, { status: 400 });

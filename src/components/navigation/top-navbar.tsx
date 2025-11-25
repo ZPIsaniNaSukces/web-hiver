@@ -40,7 +40,7 @@ export const TopNavbar = () => {
 
   return (
     <header className="bg-background fixed top-0 z-40 w-full">
-      <div className="mx-auto mt-4 flex h-16 w-full max-w-6xl items-center justify-between px-4">
+      <div className="mx-auto mt-4 flex h-16 w-full items-center justify-between px-4">
         <Link
           href="/"
           className="text-foreground flex items-center gap-3 text-base font-semibold"
