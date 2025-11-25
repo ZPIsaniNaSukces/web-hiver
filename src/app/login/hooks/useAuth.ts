@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAtom, useSetAtom } from "jotai";
 import { useEffect } from "react";
 
+import { Role } from "@/config/enums";
 import { authUserAtom, authUserOptimisticAtom } from "@/lib/auth-user-atom";
 import { clientFetch } from "@/lib/fetch";
 import { User } from "@/types/auth-types";
@@ -38,6 +39,8 @@ export function useAuth() {
       setUser(null);
     }
   }, [sessionQuery.status, sessionQuery.data, setUser]);
+
+  const isAdmin = user?.role === Role.ADMIN;
 
   const loginMutation = useMutation<User, AuthError, LoginInput>({
     mutationFn: async (input: LoginInput) => {
@@ -91,5 +94,6 @@ export function useAuth() {
     logoutMutation,
     login,
     logout,
+    isAdmin,
   };
 }
