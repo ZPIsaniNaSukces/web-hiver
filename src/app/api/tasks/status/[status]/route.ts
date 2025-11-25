@@ -5,8 +5,6 @@ import { TaskStatus } from "@/config/enums";
 import { parseCookie } from "@/lib/cookie-utils";
 import { ErrorBody } from "@/types/auth-types";
 
-type Params = Promise<{ status: TaskStatus }>;
-
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ status: string }> },
