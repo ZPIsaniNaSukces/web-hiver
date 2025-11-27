@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { ReactNode } from "react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 
 import { BackArrow } from "../components/back-arrow";
@@ -41,7 +42,9 @@ export default function UserDetailsPage() {
                 <p className="text-xl font-semibold text-gray-900">
                   {user.name} {user.surname}
                 </p>
-                <p className="text-sm text-gray-500">{formatRole(user.role)}</p>
+                <p className="text-sm text-gray-500">
+                  {formatRole(user.title ?? "unknown")}
+                </p>
               </div>
             </div>
 
@@ -49,12 +52,27 @@ export default function UserDetailsPage() {
               <DetailRow label="Adres e-mail" value={user.email} />
               <DetailRow label="Telefon" value={user.phone ?? "—"} />
               <DetailRow
-                label="Identyfikator firmy"
-                value={String(user.companyId ?? "—")}
+                label="Przełożony"
+                value={
+                  user.boss ? (
+                    <Link
+                      href={`/users/${user.boss.id}`}
+                      className="hover:underline"
+                    >
+                      {user.boss?.name} {user.boss?.surname}
+                    </Link>
+                  ) : (
+                    "—"
+                  )
+                }
               />
               <DetailRow
                 label="Zespoły"
-                value={user.teamIds?.length ? user.teamIds.join(", ") : "—"}
+                value={
+                  user.teams?.length
+                    ? user.teams.map((team) => team.name).join(", ")
+                    : "—"
+                }
               />
             </div>
           </div>
@@ -66,7 +84,7 @@ export default function UserDetailsPage() {
 
 type DetailRowProps = {
   label: string;
-  value: string;
+  value: ReactNode;
 };
 
 function DetailRow({ label, value }: DetailRowProps) {

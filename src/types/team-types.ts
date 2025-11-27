@@ -4,17 +4,13 @@ import type { User } from "./auth-types";
 
 export type TeamMember = User;
 
-export type TeamCounts = {
-  users: number;
-};
-
 export type TeamSummary = {
   id: number;
   name: string;
   companyId: number;
   leaderId: number | null;
   leader: TeamMember | null;
-  _count: TeamCounts;
+  usersCount: number;
 };
 
 export type TeamDetails = TeamSummary & {
@@ -25,14 +21,19 @@ export type TeamsResponse = TeamSummary[];
 
 export const CreateTeamSchema = z.object({
   name: z.string().min(1, "Nazwa zespołu jest wymagana"),
-  companyId: z
-    .number()
-    .int("Identyfikator firmy musi być liczbą całkowitą")
-    .positive("Identyfikator firmy musi być dodatni"),
   leaderId: z
     .number()
     .int("Identyfikator lidera musi być liczbą całkowitą")
     .positive("Identyfikator lidera musi być dodatni")
+    .optional(),
+  memberIds: z
+    .array(
+      z
+        .number()
+        .int("Identyfikator członka musi być liczbą całkowitą")
+        .positive("Identyfikator członka musi być dodatni"),
+    )
+    .max(1000, "Zbyt wiele członków w jednym zespole")
     .optional(),
 });
 

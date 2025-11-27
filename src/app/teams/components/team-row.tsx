@@ -35,7 +35,7 @@ export function TeamRow({ team }: TeamRowProps) {
 
       <div className="flex flex-col pr-8 text-sm text-gray-600 sm:justify-self-end sm:text-right">
         <span className="text-xs text-gray-500 sm:hidden">Liczba członków</span>
-        <span>{team._count?.users ?? 0}</span>
+        <span>{team.usersCount ?? 0}</span>
       </div>
 
       <div className="flex items-center justify-start gap-2 sm:justify-start">

@@ -29,18 +29,18 @@ export const TaskList = ({
         <AccordionTrigger className="cursor-pointer text-lg font-semibold">
           {title}
         </AccordionTrigger>
-        <DataStateWrapper
-          isLoading={isLoading}
-          isError={isError}
-          errorMessage={error?.error}
-          hasData={tasks.length > 0}
-        >
-          <AccordionContent className="space-y-2">
+        <AccordionContent className="space-y-2">
+          <DataStateWrapper
+            isLoading={isLoading}
+            isError={isError}
+            errorMessage={error?.error}
+            hasData={tasks.length > 0}
+          >
             {tasks.map((task) => (
               <TaskElement key={task.title} task={task} />
             ))}
-          </AccordionContent>
-        </DataStateWrapper>
+          </DataStateWrapper>
+        </AccordionContent>
       </AccordionItem>
     </Accordion>
   );

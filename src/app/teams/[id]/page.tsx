@@ -54,7 +54,7 @@ export default function TeamDetailsPage() {
                     Firma: {team.companyId}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Liczba członków: {team._count?.users ?? members.length}
+                    Liczba członków: {team.usersCount}
                   </p>
                 </div>
               </div>

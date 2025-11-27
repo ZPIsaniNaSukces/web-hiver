@@ -27,7 +27,7 @@ function UserRow({ user }: UserRowProps) {
             {user.name} {user.surname}
           </p>
           <p className="text-xs text-gray-500 sm:hidden">
-            {formatRole(user.role)}
+            {formatRole(user.title ?? "unknown")}
           </p>
         </div>
       </div>
@@ -35,7 +35,7 @@ function UserRow({ user }: UserRowProps) {
       <div className="text-sm text-gray-600">{user.email}</div>
 
       <div className="hidden text-sm text-gray-600 sm:block">
-        {formatRole(user.role)}
+        {formatRole(user.title ?? "unknown")}
       </div>
 
       <div className="flex items-center justify-start sm:justify-end">

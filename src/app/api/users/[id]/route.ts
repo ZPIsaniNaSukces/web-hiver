@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_COOKIE_NAME, BACKEND_URL } from "@/config/constants";
 import { parseCookie } from "@/lib/cookie-utils";
+import { ErrorBody } from "@/types/auth-types";
 
 export async function GET(
   req: NextRequest,
@@ -32,7 +33,34 @@ export async function GET(
     cache: "no-store",
   });
 
-  const data = await res.json().catch(() => null);
+  if (!res.ok) {
+    let err: ErrorBody = {};
+    try {
+      err = await res.json();
+    } catch {}
+    const msg = err.message || "Something went wrong";
+    return NextResponse.json({ error: msg }, { status: res.status || 400 });
+  }
+
+  let data = await res.json().catch(() => null);
+  console.log("Fetched user data:", data);
+  if (data?.bossId) {
+    console.log("Fetching boss data for bossId:", data.bossId);
+    const backendBossUrl = new URL(`/users/${data?.bossId}`, BACKEND_URL);
+
+    const bossRes = await fetch(backendBossUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
+    if (bossRes.ok) {
+      const bossData = await bossRes.json().catch(() => null);
+      data = { ...data, boss: bossData };
+    }
+  }
 
   return NextResponse.json(data, { status: res.status });
 }
