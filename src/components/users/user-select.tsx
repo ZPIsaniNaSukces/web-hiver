@@ -172,7 +172,7 @@ export function UserSelect(props: UserSelectProps) {
                   >
                     <div className="flex items-center gap-3">
                       <Avatar className="size-10">
-                        <AvatarFallback className="bg-amber-100 text-amber-700">
+                        <AvatarFallback>
                           {getInitials(user.name, user.surname)}
                         </AvatarFallback>
                       </Avatar>

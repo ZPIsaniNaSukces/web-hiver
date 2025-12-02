@@ -42,7 +42,7 @@ export default function UserDetailsPage() {
           <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
             <div className="flex flex-col gap-6 px-6 py-6 sm:flex-row sm:items-center">
               <Avatar className="size-20">
-                <AvatarFallback className="bg-amber-100 text-2xl text-amber-700">
+                <AvatarFallback className="text-2xl">
                   {getInitials(user.name, user.surname)}
                 </AvatarFallback>
               </Avatar>

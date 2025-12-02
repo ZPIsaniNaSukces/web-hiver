@@ -49,7 +49,7 @@ export default function TeamDetailsPage() {
             <div className="grid gap-6 px-6 py-6 md:grid-cols-[auto_1fr] md:items-center">
               <div className="flex items-center gap-4">
                 <Avatar className="size-20">
-                  <AvatarFallback className="bg-amber-100 text-2xl text-amber-700">
+                  <AvatarFallback className="text-2xl">
                     {team.leader
                       ? getInitials(team.leader.name, team.leader.surname)
                       : team.name.slice(0, 2).toUpperCase()}
@@ -108,7 +108,7 @@ export default function TeamDetailsPage() {
                           >
                             <div className="flex items-center gap-3">
                               <Avatar className="size-10">
-                                <AvatarFallback className="bg-amber-100 text-amber-700">
+                                <AvatarFallback>
                                   {getInitials(member.name, member.surname)}
                                 </AvatarFallback>
                               </Avatar>
