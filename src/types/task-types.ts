@@ -18,6 +18,31 @@ export const createTaskSchema = z.object({
   assigneeId: z.number().int().positive().optional(),
 });
 
-export type Task = z.infer<typeof createTaskSchema>;
+export type CreateTaskInput = z.infer<typeof createTaskSchema>;
 
-export type TasksResponse = Task[];
+export type Task = {
+  id: number;
+  title: string;
+  description: string | null;
+  status: TaskStatus;
+  type: TaskType;
+  dueDate: string | null;
+  reporterId: number | null;
+  assigneeId: number | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TasksMeta = {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
+
+export type TasksPage = {
+  data: Task[];
+  meta: TasksMeta;
+};

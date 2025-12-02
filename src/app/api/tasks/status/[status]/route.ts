@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_COOKIE_NAME, BACKEND_URL } from "@/config/constants";
-import { TaskStatus } from "@/config/enums";
 import { parseCookie } from "@/lib/cookie-utils";
 import { ErrorBody } from "@/types/auth-types";
 
@@ -24,6 +23,10 @@ export async function GET(
   }
 
   const backendUrl = new URL(`/tasks/status/${status}`, BACKEND_URL);
+
+  req.nextUrl.searchParams.forEach((value, key) => {
+    backendUrl.searchParams.set(key, value);
+  });
 
   const res = await fetch(backendUrl, {
     method: "GET",
