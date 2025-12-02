@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { BackArrow } from "@/app/users/components/back-arrow";
@@ -11,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 
 import { useTeamDetails } from "../hooks/use-team-details";
@@ -26,7 +28,14 @@ export default function TeamDetailsPage() {
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
-      <BackArrow href="/teams" label="Wróć do listy zespołów" />
+      <div className="flex items-center justify-between">
+        <BackArrow href="/teams" label="Wróć do listy zespołów" />
+        {teamId && (
+          <Button asChild size="sm">
+            <Link href={`/teams/${teamId}/edit`}>Edytuj</Link>
+          </Button>
+        )}
+      </div>
 
       <DataStateWrapper
         isLoading={isLoading}

@@ -38,3 +38,4 @@ export const CreateTeamSchema = z.object({
 });
 
 export type CreateTeamType = z.infer<typeof CreateTeamSchema>;
+export type UpdateTeamType = z.infer<typeof CreateTeamSchema>;

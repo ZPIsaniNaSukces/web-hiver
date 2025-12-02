@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 
 import { BackArrow } from "../components/back-arrow";
@@ -21,7 +22,14 @@ export default function UserDetailsPage() {
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
-      <BackArrow />
+      <div className="flex items-center justify-between">
+        <BackArrow />
+        {userId && (
+          <Button asChild size="sm">
+            <Link href={`/users/${userId}/edit`}>Edytuj</Link>
+          </Button>
+        )}
+      </div>
 
       <DataStateWrapper
         isLoading={isLoading}
@@ -43,14 +51,23 @@ export default function UserDetailsPage() {
                   {user.name} {user.surname}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {formatRole(user.title ?? "unknown")}
+                  {user.title ?? "Brak stanowiska"}
+                </p>
+                <p className="text-xs font-medium tracking-wide text-gray-400 uppercase">
+                  {formatRole(user.role)}
                 </p>
               </div>
             </div>
 
             <div className="grid gap-4 border-t border-gray-100 px-6 py-6 sm:grid-cols-2">
               <DetailRow label="Adres e-mail" value={user.email} />
-              <DetailRow label="Telefon" value={user.phone ?? "—"} />
+              <DetailRow label="Telefon" value={user.phone?.trim() || "—"} />
+              <DetailRow label="Stanowisko" value={user.title ?? "—"} />
+              <DetailRow label="Rola" value={formatRole(user.role)} />
+              <DetailRow
+                label="Data urodzenia"
+                value={formatDateOfBirth(user.dateOfBirth)}
+              />
               <DetailRow
                 label="Przełożony"
                 value={
@@ -66,14 +83,16 @@ export default function UserDetailsPage() {
                   )
                 }
               />
-              <DetailRow
-                label="Zespoły"
-                value={
-                  user.teams?.length
-                    ? user.teams.map((team) => team.name).join(", ")
-                    : "—"
-                }
-              />
+              <div className="sm:col-span-2">
+                <DetailRow
+                  label="Zespoły"
+                  value={
+                    user.teams?.length
+                      ? user.teams.map((team) => team.name).join(", ")
+                      : "—"
+                  }
+                />
+              </div>
             </div>
           </div>
         )}
@@ -86,6 +105,21 @@ type DetailRowProps = {
   label: string;
   value: ReactNode;
 };
+
+function formatDateOfBirth(value: string | null | undefined) {
+  if (!value) {
+    return "—";
+  }
+
+  const normalized = value.split("T")[0] ?? value;
+  const [year, month, day] = normalized.split("-");
+
+  if (year && month && day) {
+    return `${day}.${month}.${year}`;
+  }
+
+  return normalized;
+}
 
 function DetailRow({ label, value }: DetailRowProps) {
   return (
