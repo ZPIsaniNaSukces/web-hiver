@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { BackArrow } from "@/app/users/components/back-arrow";
@@ -11,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 
 import { useTeamDetails } from "../hooks/use-team-details";
@@ -26,7 +28,14 @@ export default function TeamDetailsPage() {
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
-      <BackArrow href="/teams" label="Wróć do listy zespołów" />
+      <div className="flex items-center justify-between">
+        <BackArrow href="/teams" label="Wróć do listy zespołów" />
+        {teamId && (
+          <Button asChild size="sm">
+            <Link href={`/teams/${teamId}/edit`}>Edytuj</Link>
+          </Button>
+        )}
+      </div>
 
       <DataStateWrapper
         isLoading={isLoading}
@@ -40,7 +49,7 @@ export default function TeamDetailsPage() {
             <div className="grid gap-6 px-6 py-6 md:grid-cols-[auto_1fr] md:items-center">
               <div className="flex items-center gap-4">
                 <Avatar className="size-20">
-                  <AvatarFallback className="bg-amber-100 text-2xl text-amber-700">
+                  <AvatarFallback className="text-2xl">
                     {team.leader
                       ? getInitials(team.leader.name, team.leader.surname)
                       : team.name.slice(0, 2).toUpperCase()}
@@ -54,7 +63,7 @@ export default function TeamDetailsPage() {
                     Firma: {team.companyId}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Liczba członków: {team._count?.users ?? members.length}
+                    Liczba członków: {team.usersCount}
                   </p>
                 </div>
               </div>
@@ -99,7 +108,7 @@ export default function TeamDetailsPage() {
                           >
                             <div className="flex items-center gap-3">
                               <Avatar className="size-10">
-                                <AvatarFallback className="bg-amber-100 text-amber-700">
+                                <AvatarFallback>
                                   {getInitials(member.name, member.surname)}
                                 </AvatarFallback>
                               </Avatar>

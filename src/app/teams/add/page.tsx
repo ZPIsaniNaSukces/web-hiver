@@ -13,30 +13,31 @@ import type { User } from "@/types/auth-types";
 import { CreateTeamSchema } from "@/types/team-types";
 
 import { useCreateTeam } from "../hooks/use-create-team";
+import { TeamMembersSelect } from "./components/team-members-select";
 
 type FormValues = {
   name: string;
-  companyId: string;
 };
 
-type FormErrors = Partial<Record<"name" | "companyId" | "leaderId", string>>;
+type FormErrors = Partial<Record<"name" | "leaderId" | "memberIds", string>>;
 
 export default function AddTeamPage() {
   const router = useRouter();
 
   const [values, setValues] = useState<FormValues>({
     name: "",
-    companyId: "",
   });
   const [selectedLeader, setSelectedLeader] = useState<User | null>(null);
+  const [selectedMembers, setSelectedMembers] = useState<User[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
 
   const createTeamMutation = useCreateTeam();
   const isSubmitting = createTeamMutation.isPending;
 
   const resetForm = () => {
-    setValues({ name: "", companyId: "" });
+    setValues({ name: "" });
     setSelectedLeader(null);
+    setSelectedMembers([]);
     setErrors({});
   };
 
@@ -44,13 +45,23 @@ export default function AddTeamPage() {
     event.preventDefault();
 
     const trimmedName = values.name.trim();
-    const companyIdNumber =
-      values.companyId.trim() === ""
-        ? Number.NaN
-        : Number(values.companyId.trim());
     const leaderIdNumber = selectedLeader
       ? Number(selectedLeader.id)
       : undefined;
+    const memberIdsNumbers = selectedMembers.map((member) => Number(member.id));
+
+    const hasInvalidMemberId = memberIdsNumbers.some((id) => Number.isNaN(id));
+
+    if (hasInvalidMemberId) {
+      setErrors((prev) => ({
+        ...prev,
+        memberIds: "Niepoprawni członkowie zespołu",
+      }));
+      toast.error("Popraw błędy w formularzu");
+      return;
+    }
+
+    const uniqueMemberIds = Array.from(new Set(memberIdsNumbers));
 
     if (selectedLeader && Number.isNaN(leaderIdNumber)) {
       setErrors((prev) => ({ ...prev, leaderId: "Niepoprawny lider" }));
@@ -60,16 +71,16 @@ export default function AddTeamPage() {
 
     const result = CreateTeamSchema.safeParse({
       name: trimmedName,
-      companyId: companyIdNumber,
       leaderId: leaderIdNumber,
+      memberIds: uniqueMemberIds.length > 0 ? uniqueMemberIds : undefined,
     });
 
     if (!result.success) {
       const fieldErrors = result.error.flatten().fieldErrors;
       setErrors({
         name: fieldErrors.name?.[0],
-        companyId: fieldErrors.companyId?.[0],
         leaderId: fieldErrors.leaderId?.[0],
+        memberIds: fieldErrors.memberIds?.[0],
       });
       toast.error("Popraw błędy w formularzu");
       return;
@@ -98,6 +109,11 @@ export default function AddTeamPage() {
   const handleLeaderChange = (leader: User | null) => {
     setSelectedLeader(leader);
     setErrors((prev) => ({ ...prev, leaderId: undefined }));
+  };
+
+  const handleMembersChange = (members: User[]) => {
+    setSelectedMembers(members);
+    setErrors((prev) => ({ ...prev, memberIds: undefined }));
   };
 
   return (
@@ -144,43 +160,6 @@ export default function AddTeamPage() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="companyId"
-              className="text-sm font-medium text-gray-700"
-            >
-              Identyfikator firmy*
-            </label>
-            <Input
-              id="companyId"
-              type="number"
-              min={0}
-              step={1}
-              placeholder="np. 123"
-              value={values.companyId}
-              onChange={(event) => {
-                const nextValue = event.target.value;
-                setValues((prev) => ({ ...prev, companyId: nextValue }));
-                if (errors.companyId) {
-                  setErrors((prev) => ({ ...prev, companyId: undefined }));
-                }
-              }}
-              aria-invalid={!!errors.companyId}
-              aria-describedby={
-                errors.companyId ? "team-company-error" : undefined
-              }
-              disabled={isSubmitting}
-            />
-            {errors.companyId && (
-              <p id="team-company-error" className="text-destructive text-sm">
-                {errors.companyId}
-              </p>
-            )}
-            <p className="text-xs text-gray-400">
-              Wprowadź identyfikator firmy, do której ma należeć zespół.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-1">
             <span className="text-sm font-medium text-gray-700">Lider</span>
             <UserSelect
               value={selectedLeader}
@@ -193,6 +172,24 @@ export default function AddTeamPage() {
             />
             <span className="text-xs text-gray-400">
               Wybierz lidera z listy lub pozostaw puste, jeśli nie dotyczy.
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-medium text-gray-700">
+              Członkowie zespołu
+            </span>
+            <TeamMembersSelect
+              value={selectedMembers}
+              onChange={handleMembersChange}
+              disabled={isSubmitting}
+              error={errors.memberIds}
+              placeholder="Dodaj członków zespołu"
+              searchPlaceholder="Szukaj członka..."
+              emptyOptionLabel="Wyczyść wybór"
+            />
+            <span className="text-xs text-gray-400">
+              Wybierz osoby, które mają dołączyć do zespołu już teraz.
             </span>
           </div>
         </div>

@@ -18,7 +18,7 @@ function UserRow({ user }: UserRowProps) {
     <li className="grid grid-cols-1 gap-4 px-6 py-4 text-sm text-gray-700 sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_auto] sm:items-center">
       <div className="flex items-center gap-3">
         <Avatar className="size-12">
-          <AvatarFallback className="bg-amber-100 text-amber-700">
+          <AvatarFallback>
             {getInitials(user.name, user.surname)}
           </AvatarFallback>
         </Avatar>
@@ -27,7 +27,7 @@ function UserRow({ user }: UserRowProps) {
             {user.name} {user.surname}
           </p>
           <p className="text-xs text-gray-500 sm:hidden">
-            {formatRole(user.role)}
+            {formatRole(user.title ?? "unknown")}
           </p>
         </div>
       </div>
@@ -35,7 +35,7 @@ function UserRow({ user }: UserRowProps) {
       <div className="text-sm text-gray-600">{user.email}</div>
 
       <div className="hidden text-sm text-gray-600 sm:block">
-        {formatRole(user.role)}
+        {formatRole(user.title ?? "unknown")}
       </div>
 
       <div className="flex items-center justify-start sm:justify-end">

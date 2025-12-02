@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { useAuth } from "@/app/login/hooks/useAuth";
+import { getInitials } from "@/app/users/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -77,8 +78,9 @@ export const TopNavbar = () => {
             </div>
 
             <Avatar className="absolute top-2 left-1/2 z-10 h-12 w-12 -translate-x-1/2 ring-1 ring-black/5">
-              <AvatarImage src="/avatar.png" alt="Ja" />
-              <AvatarFallback>JA</AvatarFallback>
+              <AvatarFallback className="text-2xl">
+                {user ? getInitials(user.name, user.surname) : "JA"}
+              </AvatarFallback>
             </Avatar>
           </div>
         </div>

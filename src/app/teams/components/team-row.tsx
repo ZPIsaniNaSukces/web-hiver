@@ -17,7 +17,7 @@ export function TeamRow({ team }: TeamRowProps) {
     <li className="grid grid-cols-1 gap-4 px-6 py-4 text-sm text-gray-700 sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_auto] sm:items-center sm:gap-4">
       <div className="flex items-center gap-3">
         <Avatar className="size-12">
-          <AvatarFallback className="bg-amber-100 text-amber-700">
+          <AvatarFallback>
             {leader ? getInitials(leader.name, leader.surname) : "?"}
           </AvatarFallback>
         </Avatar>
@@ -35,7 +35,7 @@ export function TeamRow({ team }: TeamRowProps) {
 
       <div className="flex flex-col pr-8 text-sm text-gray-600 sm:justify-self-end sm:text-right">
         <span className="text-xs text-gray-500 sm:hidden">Liczba członków</span>
-        <span>{team._count?.users ?? 0}</span>
+        <span>{team.usersCount ?? 0}</span>
       </div>
 
       <div className="flex items-center justify-start gap-2 sm:justify-start">
