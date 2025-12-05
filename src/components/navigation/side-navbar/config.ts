@@ -15,7 +15,7 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     id: "primary",
     items: [
-      { label: "Strona główna", href: "/", icon: Home },
+      { label: "Strona główna", href: "/dashboard", icon: Home },
       { label: "Pracownicy", href: "/users", icon: User },
     ],
   },

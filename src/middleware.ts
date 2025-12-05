@@ -38,7 +38,14 @@ export const middleware = (request: NextRequest) => {
       res.cookies.delete(AUTH_COOKIE_NAME);
       return res;
     }
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  if (pathname === "/") {
+    if (session && !expired) {
+      return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+    return NextResponse.next();
   }
 
   if (isPublicPath(pathname)) {

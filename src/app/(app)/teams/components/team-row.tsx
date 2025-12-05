@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-import { getInitials } from "@/app/users/utils";
+import { getInitials } from "@/app/(app)/users/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { TeamSummary } from "@/types/team-types";

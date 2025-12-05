@@ -6,8 +6,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+import { getInitials } from "@/app/(app)/users/utils";
 import { useAuth } from "@/app/login/hooks/useAuth";
-import { getInitials } from "@/app/users/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
