@@ -16,14 +16,22 @@ import { useCreateUser } from "../hooks/use-create-user";
 
 type FormValues = {
   email: string;
+  name: string;
+  surname: string;
+  title: string;
 };
 
-type FormErrors = Partial<Record<"email" | "bossId", string>>;
+type FormErrors = Partial<
+  Record<"email" | "name" | "surname" | "title" | "bossId", string>
+>;
 
 export default function AddUserPage() {
   const router = useRouter();
   const [values, setValues] = useState<FormValues>({
     email: "",
+    name: "",
+    surname: "",
+    title: "",
   });
   const [selectedBoss, setSelectedBoss] = useState<User | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -32,7 +40,7 @@ export default function AddUserPage() {
   const isSubmitting = createUserMutation.isPending;
 
   const resetForm = () => {
-    setValues({ email: "" });
+    setValues({ email: "", name: "", surname: "", title: "" });
     setSelectedBoss(null);
     setErrors({});
   };
@@ -41,6 +49,9 @@ export default function AddUserPage() {
     event.preventDefault();
 
     const trimmedEmail = values.email.trim();
+    const trimmedName = values.name.trim();
+    const trimmedSurname = values.surname.trim();
+    const trimmedTitle = values.title.trim();
     const bossIdNumber = selectedBoss ? Number(selectedBoss.id) : undefined;
 
     if (selectedBoss && Number.isNaN(bossIdNumber)) {
@@ -51,6 +62,9 @@ export default function AddUserPage() {
 
     const result = CreateUserSchema.safeParse({
       email: trimmedEmail,
+      name: trimmedName,
+      surname: trimmedSurname,
+      title: trimmedTitle,
       bossId: bossIdNumber,
     });
 
@@ -58,6 +72,9 @@ export default function AddUserPage() {
       const fieldErrors = result.error.flatten().fieldErrors;
       setErrors({
         email: fieldErrors.email?.[0],
+        name: fieldErrors.name?.[0],
+        surname: fieldErrors.surname?.[0],
+        title: fieldErrors.title?.[0],
         bossId: fieldErrors.bossId?.[0],
       });
       toast.error("Popraw błędy w formularzu");
@@ -133,6 +150,95 @@ export default function AddUserPage() {
             {errors.email && (
               <p id="email-error" className="text-destructive text-sm">
                 {errors.email}
+              </p>
+            )}
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="name"
+                className="text-sm font-medium text-gray-700"
+              >
+                Imię*
+              </label>
+              <Input
+                id="name"
+                placeholder="np. Jan"
+                value={values.name}
+                onChange={(event) => {
+                  const nextValue = event.target.value;
+                  setValues((prev) => ({ ...prev, name: nextValue }));
+                  if (errors.name) {
+                    setErrors((prev) => ({ ...prev, name: undefined }));
+                  }
+                }}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "name-error" : undefined}
+                disabled={isSubmitting}
+              />
+              {errors.name && (
+                <p id="name-error" className="text-destructive text-sm">
+                  {errors.name}
+                </p>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="surname"
+                className="text-sm font-medium text-gray-700"
+              >
+                Nazwisko*
+              </label>
+              <Input
+                id="surname"
+                placeholder="np. Kowalski"
+                value={values.surname}
+                onChange={(event) => {
+                  const nextValue = event.target.value;
+                  setValues((prev) => ({ ...prev, surname: nextValue }));
+                  if (errors.surname) {
+                    setErrors((prev) => ({ ...prev, surname: undefined }));
+                  }
+                }}
+                aria-invalid={!!errors.surname}
+                aria-describedby={errors.surname ? "surname-error" : undefined}
+                disabled={isSubmitting}
+              />
+              {errors.surname && (
+                <p id="surname-error" className="text-destructive text-sm">
+                  {errors.surname}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="title"
+              className="text-sm font-medium text-gray-700"
+            >
+              Stanowisko*
+            </label>
+            <Input
+              id="title"
+              placeholder="np. Senior Developer"
+              value={values.title}
+              onChange={(event) => {
+                const nextValue = event.target.value;
+                setValues((prev) => ({ ...prev, title: nextValue }));
+                if (errors.title) {
+                  setErrors((prev) => ({ ...prev, title: undefined }));
+                }
+              }}
+              aria-invalid={!!errors.title}
+              aria-describedby={errors.title ? "title-error" : undefined}
+              disabled={isSubmitting}
+            />
+            {errors.title && (
+              <p id="title-error" className="text-destructive text-sm">
+                {errors.title}
               </p>
             )}
           </div>

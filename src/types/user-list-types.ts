@@ -20,6 +20,21 @@ export type UsersMeta = {
 
 export const CreateUserSchema = z.object({
   email: z.string().email("Podaj poprawny adres e-mail"),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Imię musi mieć co najmniej 2 znaki")
+    .max(64, "Imię może mieć maksymalnie 64 znaki"),
+  surname: z
+    .string()
+    .trim()
+    .min(2, "Nazwisko musi mieć co najmniej 2 znaki")
+    .max(64, "Nazwisko może mieć maksymalnie 64 znaki"),
+  title: z
+    .string()
+    .trim()
+    .min(2, "Stanowisko musi mieć co najmniej 2 znaki")
+    .max(100, "Stanowisko może mieć maksymalnie 100 znaków"),
   bossId: z
     .number()
     .int("Identyfikator przełożonego musi być liczbą całkowitą")

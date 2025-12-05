@@ -24,6 +24,7 @@ export type User = {
   teams?: Array<{ id: number; name: string }>;
   title?: string | null;
   boss?: User | null;
+  availableLeaveHours?: number;
 };
 
 export type LoginResponse = {

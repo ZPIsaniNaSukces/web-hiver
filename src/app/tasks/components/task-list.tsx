@@ -44,9 +44,10 @@ export const TaskList = ({
     <Accordion
       type="single"
       collapsible
-      className="w-full space-y-2 rounded-md bg-white px-4"
+      className="border-border bg-card/50 w-full space-y-2 rounded-2xl border px-4 shadow-sm backdrop-blur"
+      defaultValue="item-1"
     >
-      <AccordionItem value="item-1">
+      <AccordionItem value="item-1" defaultValue="item1">
         <AccordionTrigger className="cursor-pointer text-lg font-semibold">
           {title}
         </AccordionTrigger>
