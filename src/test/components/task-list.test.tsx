@@ -1,3 +1,4 @@
+import { DndContext } from "@dnd-kit/core";
 import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
@@ -8,7 +9,15 @@ import { renderWithProviders } from "@/test/utils";
 
 const TaskListWrapper = () => {
   const queryResult = useTasksInfinite({ status: TaskStatus.TODO });
-  return <TaskList queryResult={queryResult} title="To Do" />;
+  return (
+    <DndContext>
+      <TaskList
+        queryResult={queryResult}
+        title="To Do"
+        status={TaskStatus.TODO}
+      />
+    </DndContext>
+  );
 };
 
 describe("TaskList", () => {

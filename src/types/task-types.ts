@@ -2,6 +2,8 @@ import z from "zod";
 
 import { TaskStatus, TaskType } from "@/config/enums";
 
+import { User } from "./auth-types";
+
 export const createTaskSchema = z.object({
   title: z
     .string()
@@ -31,6 +33,7 @@ export type Task = {
   assigneeId: number | null;
   createdAt: string;
   updatedAt: string;
+  assignee: User;
 };
 
 export type TasksMeta = {

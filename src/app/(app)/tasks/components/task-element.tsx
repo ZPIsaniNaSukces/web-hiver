@@ -1,3 +1,8 @@
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
+import { CSSProperties } from "react";
+
+import { cn } from "@/lib/utils";
 import { Task } from "@/types/task-types";
 
 const formatDueDate = (
@@ -22,11 +27,22 @@ const formatDueDate = (
   );
 };
 
-export const TaskElement = ({ task }: { task: Task }) => {
+export const TaskCard = ({
+  task,
+  className,
+}: {
+  task: Task;
+  className?: string;
+}) => {
   const formattedDueDate = formatDueDate(task.dueDate);
 
   return (
-    <div className="bg-background space-y-2.5 rounded-md p-4">
+    <div
+      className={cn(
+        "bg-background space-y-2.5 rounded-md p-4 shadow-sm",
+        className,
+      )}
+    >
       <div className="flex items-center justify-between">
         <div className="flex flex-row items-center gap-4">
           <h3 className="font-semibold">{task.title}</h3>
@@ -47,6 +63,31 @@ export const TaskElement = ({ task }: { task: Task }) => {
           {formattedDueDate ?? "Brak terminu"}
         </p>
       </div>
+    </div>
+  );
+};
+
+export const TaskElement = ({ task }: { task: Task }) => {
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: `task-${task.id}`,
+      data: { task },
+    });
+
+  const style: CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    visibility: isDragging ? "hidden" : "visible",
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="w-full cursor-grab active:cursor-grabbing"
+      {...listeners}
+      {...attributes}
+    >
+      <TaskCard task={task} />
     </div>
   );
 };
