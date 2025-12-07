@@ -9,7 +9,10 @@ export const PUBLIC_PATH_PREFIXES = [
   "/",
 ];
 export const ROUTE_PERMISSIONS: Record<string, Role[]> = {
-  // "/dashboard": [Role.ADMIN, Role.MANAGER],
+  "/dashboard": [Role.ADMIN, Role.MANAGER],
+  "/users/add": [Role.ADMIN],
+  "/users/[id]/edit": [Role.ADMIN],
+  "/teams/add": [Role.ADMIN],
 };
 export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
 export const BACKEND_FOR_FRONTEND_URL =

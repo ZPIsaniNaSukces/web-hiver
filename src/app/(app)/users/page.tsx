@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useDeferredValue, useRef, useState } from "react";
 import { InView } from "react-intersection-observer";
 
+import { useAuth } from "@/app/login/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ import { useUsersInfiniteSearch } from "./hooks/use-users-infinite-search";
 export default function UsersPage() {
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search);
+  const { isAdmin } = useAuth();
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -47,9 +49,11 @@ export default function UsersPage() {
               placeholder="Szukaj po imieniu, mailu itd..."
               className="max-w-md"
             />
-            <Button asChild>
-              <Link href="/users/add">Dodaj</Link>
-            </Button>
+            {isAdmin ? (
+              <Button asChild>
+                <Link href="/users/add">Dodaj</Link>
+              </Button>
+            ) : null}
           </div>
           {meta && (
             <span className="text-xs text-gray-500">

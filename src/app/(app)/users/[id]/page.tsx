@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { useAuth } from "@/app/login/hooks/useAuth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
@@ -18,6 +19,7 @@ import { formatRole, getInitials } from "../utils";
 export default function UserDetailsPage() {
   const params = useParams<{ id: string }>();
   const userId = params?.id;
+  const { isAdmin } = useAuth();
 
   const { data, isLoading, isError, error } = useUserDetails(userId);
 
@@ -37,7 +39,7 @@ export default function UserDetailsPage() {
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
       <div className="flex items-center justify-between">
         <BackArrow />
-        {userId && (
+        {userId && isAdmin && (
           <Button asChild size="sm">
             <Link href={`/users/${userId}/edit`}>Edytuj</Link>
           </Button>
