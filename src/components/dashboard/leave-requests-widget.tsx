@@ -22,7 +22,7 @@ export function LeaveRequestsWidget({
           Oczekujące wnioski
         </h2>
         <div className="flex min-h-0 flex-1 items-center justify-center">
-          <p className="text-6xl font-extrabold text-black sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl 2xl:text-9xl">
+          <p className="text-6xl font-extrabold text-[#483A2B] sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl 2xl:text-9xl">
             {pendingCount}
           </p>
         </div>
@@ -31,7 +31,7 @@ export function LeaveRequestsWidget({
           className="w-full shrink-0 text-xs sm:text-sm"
           size="default"
         >
-          Rozpatrz
+          Rozpatrz wnioski
         </Button>
       </div>
     </Widget>

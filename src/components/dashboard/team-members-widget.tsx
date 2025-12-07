@@ -17,10 +17,10 @@ export function TeamMembersWidget({}: TeamMembersWidgetProps) {
     <Widget size="1x1">
       <div className="flex h-full flex-col justify-between gap-3 sm:gap-4 md:gap-5 lg:gap-6">
         <h2 className="text-foreground mmd:text-sm shrink-0 text-xs font-semibold sm:text-sm lg:text-lg xl:text-xl">
-          Mój zespół
+          Moi podwładni
         </h2>
         <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden text-xs sm:text-sm md:text-base">
-          tu ziomki z teamu
+          tu ziomki + ich dostępność
         </div>
         <Button
           onClick={handleClick}

@@ -1,11 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { WidgetSize } from "@/types/widget-types";
-
-interface WidgetProps {
-  size: WidgetSize;
-  children: React.ReactNode;
-  className?: string;
-}
+import { WidgetProps } from "@/types/widget-types";
 
 export function Widget({ size, children, className }: WidgetProps) {
   return (

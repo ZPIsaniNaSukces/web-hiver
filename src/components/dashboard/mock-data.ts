@@ -1,6 +1,10 @@
 import { count } from "console";
 
-import type { AttendanceHourData } from "@/types/widget-types";
+import type {
+  AttendanceHourData,
+  TasksChartDataPoint,
+  TasksSummaryData,
+} from "@/types/widget-types";
 
 export function getMockAttendanceData(): AttendanceHourData[] {
   const currentHour = 10; //new Date().getHours()
@@ -66,4 +70,27 @@ export function getMockPendingLeaveRequests(): number {
   const count = 7;
   console.log("Pending Leave Requests:", count);
   return count;
+}
+
+//mocki dla wykresu kolowego taskow - to powinno isc z api
+export function getMockTasksSummary(): TasksSummaryData {
+  return {
+    completed: 12,
+    pending: 5,
+  };
+}
+
+//mocki dla wykresu liniowego taskow w czasie - to powinno isc z api
+export function getMockTasksChartData(): TasksChartDataPoint[] {
+  return [
+    { date: "2025-11-25", completed: 8, pending: 3 },
+    { date: "2025-11-26", completed: 10, pending: 4 },
+    { date: "2025-11-27", completed: 6, pending: 7 },
+    { date: "2025-11-28", completed: 12, pending: 2 },
+    { date: "2025-11-29", completed: 9, pending: 5 },
+    { date: "2025-12-01", completed: 11, pending: 3 },
+    { date: "2025-12-02", completed: 7, pending: 6 },
+    { date: "2025-12-03", completed: 14, pending: 4 },
+    { date: "2025-12-04", completed: 12, pending: 5 },
+  ];
 }
