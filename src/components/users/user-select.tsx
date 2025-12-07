@@ -4,8 +4,8 @@ import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { InView } from "react-intersection-observer";
 
-import { useUsersInfiniteSearch } from "@/app/users/hooks/use-users-infinite-search";
-import { formatRole, getInitials } from "@/app/users/utils";
+import { useUsersInfiniteSearch } from "@/app/(app)/users/hooks/use-users-infinite-search";
+import { formatRole, getInitials } from "@/app/(app)/users/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,9 +22,7 @@ import {
 } from "@/components/ui/popover";
 import type { User } from "@/types/auth-types";
 
-export type UserSelectProps = {
-  value: User | null;
-  onChange: (user: User | null) => void;
+type UserSelectBaseProps = {
   disabled?: boolean;
   error?: string;
   placeholder?: string;
@@ -33,16 +31,37 @@ export type UserSelectProps = {
   allowEmptyOption?: boolean;
 };
 
-export function UserSelect({
-  value,
-  onChange,
-  disabled,
-  error,
-  placeholder = "Wybierz użytkownika",
-  searchPlaceholder = "Szukaj użytkownika...",
-  emptyOptionLabel = "Brak użytkownika",
-  allowEmptyOption = true,
-}: UserSelectProps) {
+type UserSelectSingleProps = UserSelectBaseProps & {
+  multiple?: false;
+  value: User | null;
+  onChange: (user: User | null) => void;
+};
+
+type UserSelectMultipleProps = UserSelectBaseProps & {
+  multiple: true;
+  value: User[];
+  onChange: (users: User[]) => void;
+};
+
+export type UserSelectProps = UserSelectSingleProps | UserSelectMultipleProps;
+
+export function UserSelect(props: UserSelectProps) {
+  const {
+    disabled,
+    error,
+    placeholder = "Wybierz użytkownika",
+    searchPlaceholder = "Szukaj użytkownika...",
+    emptyOptionLabel = "Brak użytkownika",
+    allowEmptyOption = true,
+  } = props;
+
+  const isMultiple = props.multiple === true;
+  const selectedUsers = isMultiple
+    ? props.value
+    : props.value
+      ? [props.value]
+      : [];
+
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search);
@@ -80,7 +99,11 @@ export function UserSelect({
             className="inline-flex w-full items-center justify-between gap-2"
           >
             <span className="truncate text-left">
-              {value ? `${value.name} ${value.surname}` : placeholder}
+              {selectedUsers.length
+                ? selectedUsers
+                    .map((user) => `${user.name} ${user.surname}`)
+                    .join(", ")
+                : placeholder}
             </span>
             <ChevronsUpDown className="size-4 shrink-0 opacity-50" />
           </Button>
@@ -100,28 +123,56 @@ export function UserSelect({
                 <CommandItem
                   value="__none__"
                   onSelect={() => {
-                    onChange(null);
-                    setOpen(false);
+                    if (isMultiple) {
+                      const multipleProps = props as UserSelectMultipleProps;
+                      multipleProps.onChange([]);
+                    } else {
+                      const singleProps = props as UserSelectSingleProps;
+                      singleProps.onChange(null);
+                    }
+                    if (!isMultiple) {
+                      setOpen(false);
+                    }
                   }}
                 >
                   {emptyOptionLabel}
-                  {!value && <Check className="ml-auto size-4" />}
+                  {selectedUsers.length === 0 && (
+                    <Check className="ml-auto size-4" />
+                  )}
                 </CommandItem>
               )}
               {users.map((user) => {
-                const isSelected = value?.id === user.id;
+                const isSelected = selectedUsers.some(
+                  (selectedUser) => selectedUser.id === user.id,
+                );
                 return (
                   <CommandItem
                     key={user.id}
                     value={user.id}
                     onSelect={() => {
-                      onChange(user);
-                      setOpen(false);
+                      if (isMultiple) {
+                        const multipleProps = props as UserSelectMultipleProps;
+                        const alreadySelected = multipleProps.value.some(
+                          (selectedUser) => selectedUser.id === user.id,
+                        );
+
+                        const nextValue = alreadySelected
+                          ? multipleProps.value.filter(
+                              (selectedUser) => selectedUser.id !== user.id,
+                            )
+                          : [...multipleProps.value, user];
+
+                        multipleProps.onChange(nextValue);
+                      } else {
+                        const singleProps = props as UserSelectSingleProps;
+                        singleProps.onChange(user);
+                        setOpen(false);
+                      }
                     }}
                   >
                     <div className="flex items-center gap-3">
                       <Avatar className="size-10">
-                        <AvatarFallback className="bg-amber-100 text-amber-700">
+                        <AvatarFallback>
                           {getInitials(user.name, user.surname)}
                         </AvatarFallback>
                       </Avatar>

@@ -18,6 +18,13 @@ export type User = {
   phone: string | null;
   teamIds: number[];
   companyId: number;
+  accountStatus?: string | null;
+  bossId?: number | null;
+  dateOfBirth?: string | null;
+  teams?: Array<{ id: number; name: string }>;
+  title?: string | null;
+  boss?: User | null;
+  availableLeaveHours?: number;
 };
 
 export type LoginResponse = {

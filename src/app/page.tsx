@@ -1,5 +1,8 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+
 import { AttendanceWidget } from "@/components/dashboard/attendance-widget";
 import { LeaveRequestsWidget } from "@/components/dashboard/leave-requests-widget";
 import { getMockPendingLeaveRequests } from "@/components/dashboard/mock-data";
@@ -9,8 +12,9 @@ import { PlaceholderWidget } from "@/components/dashboard/placeholder-widget";
 import { TasksChartWidget } from "@/components/dashboard/tasks-chart-widget";
 import { TasksSummaryWidget } from "@/components/dashboard/tasks-summary-widget";
 import { TeamMembersWidget } from "@/components/dashboard/team-members-widget";
+import { Button } from "@/components/ui/button";
 
-export default function Home() {
+export default function LandingPage() {
   const pendingLeaveRequests = getMockPendingLeaveRequests();
   const tasksChartData = getMockTasksChartData();
   const tasksSummary = getMockTasksSummary();

@@ -3,7 +3,7 @@ import {
   ClipboardList,
   Clock,
   Home,
-  Mail,
+  MailCheck,
   Settings,
   User,
   Users,
@@ -15,7 +15,7 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     id: "primary",
     items: [
-      { label: "Strona główna", href: "/", icon: Home },
+      { label: "Strona główna", href: "/dashboard", icon: Home },
       { label: "Pracownicy", href: "/users", icon: User },
     ],
   },
@@ -24,7 +24,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: "Zespoły", href: "/teams", icon: Users },
       { label: "Zadania", href: "/tasks", icon: ClipboardList },
-      { label: "Kalendarz", href: "/calendar", icon: Calendar },
+      { label: "Wnioski", href: "/requests", icon: MailCheck },
       { label: "Czas pracy", href: "/time", icon: Clock },
     ],
   },
