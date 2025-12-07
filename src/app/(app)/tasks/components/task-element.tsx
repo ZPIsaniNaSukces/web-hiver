@@ -1,9 +1,13 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import Link from "next/link";
 import { CSSProperties } from "react";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Task } from "@/types/task-types";
+
+import { getInitials } from "../../users/utils";
 
 const formatDueDate = (
   dueDate: Task["dueDate"] | string | null | undefined,
@@ -35,6 +39,13 @@ export const TaskCard = ({
   className?: string;
 }) => {
   const formattedDueDate = formatDueDate(task.dueDate);
+  const assignee = task.assignee;
+  const assigneeName = assignee
+    ? `${assignee.name} ${assignee.lastName ?? assignee.surname ?? ""}`.trim()
+    : null;
+  const assigneeInitials = assignee
+    ? getInitials(assignee.name, assignee.lastName ?? assignee.surname)
+    : null;
 
   return (
     <div
@@ -58,10 +69,22 @@ export const TaskCard = ({
       <div>
         <p className="text-sm text-gray-600">{task.description}</p>
       </div>
-      <div>
-        <p className="text-sm text-gray-600 md:hidden">
-          {formattedDueDate ?? "Brak terminu"}
-        </p>
+      <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600">
+        {assignee && assigneeName ? (
+          <Link
+            href={`/users/${assignee.id}`}
+            className="flex items-center gap-2"
+          >
+            <Avatar className="size-6">
+              <AvatarFallback>{assigneeInitials}</AvatarFallback>
+            </Avatar>
+            <p className="hover:underline">{assigneeName}</p>
+          </Link>
+        ) : (
+          <span className="text-gray-500">Brak przypisanego użytkownika</span>
+        )}
+        <div className="h-1 w-1 rounded-full bg-gray-400 md:hidden" />
+        <p className="md:hidden">{formattedDueDate ?? "Brak terminu"}</p>
       </div>
     </div>
   );

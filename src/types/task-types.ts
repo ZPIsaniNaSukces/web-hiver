@@ -33,7 +33,8 @@ export type Task = {
   assigneeId: number | null;
   createdAt: string;
   updatedAt: string;
-  assignee: User;
+  assignee?: User | null;
+  reporter?: User | null;
 };
 
 export type TasksMeta = {
