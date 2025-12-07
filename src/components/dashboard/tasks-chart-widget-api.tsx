@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { useTasksChart } from "@/app/dashboard/hooks/use-tasks-chart";
+import { useTasksChart } from "@/app/(app)/dashboard/hooks/use-tasks-chart";
 
 import { Widget } from "./widget";
 

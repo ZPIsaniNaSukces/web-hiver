@@ -10,7 +10,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { useAttendanceStats } from "@/app/dashboard/hooks/use-attendance-stats";
+import { useAttendanceStats } from "@/app/(app)/dashboard/hooks/use-attendance-stats";
 
 import { Widget } from "./widget";
 

@@ -13,7 +13,7 @@ export function useAttendanceStats() {
     queryKey: ["attendance-stats"],
     queryFn: () =>
       jsonFetch<AttendanceHourData[]>("/api/checkincheckout/stats"),
-    staleTime: 1000 * 60,
-    refetchInterval: 1000 * 60 * 5,
+    staleTime: 1000 * 60, // 1 minute
+    refetchInterval: 1000 * 60 * 5, // refetch every 5 minutes
   });
 }

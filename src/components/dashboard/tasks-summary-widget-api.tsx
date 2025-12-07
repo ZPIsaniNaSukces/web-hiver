@@ -1,6 +1,6 @@
 "use client";
 
-import { useTasksSummary } from "@/app/dashboard/hooks/use-tasks-summary";
+import { useTasksSummary } from "@/app/(app)/dashboard/hooks/use-tasks-summary";
 import { Button } from "@/components/ui/button";
 
 import { Widget } from "./widget";
