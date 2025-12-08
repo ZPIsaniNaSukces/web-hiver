@@ -23,15 +23,15 @@ export interface AttendanceHourData {
   isCurrentHour: boolean;
 }
 
-//podsumowanie taskow wykres kolowy 1x1
+// Tasks Summary (1x1 widget)
 export interface TasksSummaryData {
   completed: number;
   pending: number;
 }
 
-//wykres liniowy 2x1
+// Tasks Chart (2x1 widget) - daily stats over time
 export interface TasksChartDataPoint {
-  date: string; //ISO date string "2025-12-04"
+  date: string; // ISO date string, e.g. "2025-12-04"
   completed: number;
   pending: number;
 }

@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
   }
 
   const backendUrl = new URL("/tasks/chart", BACKEND_URL);
+  backendUrl.searchParams.set("days", "7");
 
   const res = await fetch(backendUrl, {
     method: "GET",

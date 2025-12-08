@@ -7,10 +7,12 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mt-28">
+    <div className="h-screen pt-19">
       <TopNavbar />
       <SideDock />
-      <main className="md:ml-36">{children}</main>
+      <main className="mx-6 md:mr-10 md:ml-44 lg:mr-16 xl:mr-24 2xl:mr-32">
+        {children}
+      </main>
     </div>
   );
 }

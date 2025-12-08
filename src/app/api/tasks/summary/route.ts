@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
   }
 
   const backendUrl = new URL("/tasks/summary", BACKEND_URL);
+  backendUrl.searchParams.set("days", "30");
 
   const res = await fetch(backendUrl, {
     method: "GET",

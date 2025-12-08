@@ -1,19 +1,18 @@
 "use client";
 
+import { useRequestsPending } from "@/app/(app)/dashboard/hooks/use-requests-pending";
 import { Button } from "@/components/ui/button";
 
 import { Widget } from "./widget";
 
-interface LeaveRequestsWidgetProps {
-  pendingCount: number;
-}
+export function LeaveRequestsWidget() {
+  const { data, isLoading, error } = useRequestsPending();
 
-export function LeaveRequestsWidget({
-  pendingCount,
-}: LeaveRequestsWidgetProps) {
   const handleClick = () => {
     console.log("tu link do wnioskow");
   };
+
+  const pendingCount = data?.data?.pendingCount ?? 0;
 
   return (
     <Widget size="1x1">
@@ -22,14 +21,21 @@ export function LeaveRequestsWidget({
           Oczekujące wnioski
         </h2>
         <div className="flex min-h-0 flex-1 items-center justify-center">
-          <p className="text-6xl font-extrabold text-[#483A2B] sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl 2xl:text-9xl">
-            {pendingCount}
-          </p>
+          {isLoading ? (
+            <p className="text-muted-foreground text-sm">Ładowanie...</p>
+          ) : error ? (
+            <p className="text-destructive text-sm">Błąd wczytywania</p>
+          ) : (
+            <p className="text-6xl font-extrabold text-[#483A2B] sm:text-7xl md:text-8xl lg:text-8xl xl:text-8xl 2xl:text-9xl">
+              {pendingCount}
+            </p>
+          )}
         </div>
         <Button
           onClick={handleClick}
           className="w-full shrink-0 text-xs sm:text-sm"
           size="default"
+          disabled={isLoading}
         >
           Rozpatrz wnioski
         </Button>

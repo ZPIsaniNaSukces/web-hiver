@@ -2,22 +2,23 @@
 
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
+import { useTasksSummary } from "@/app/(app)/dashboard/hooks/use-tasks-summary";
 import { Button } from "@/components/ui/button";
-import type { TasksSummaryData } from "@/types/widget-types";
+import { TASK_COLORS as COLORS } from "@/config/constants";
 
 import { Widget } from "./widget";
 
-const COLORS = {
-  completed: "#483A2B",
-  pending: "#f59e0b",
-};
+export function TasksSummaryWidget() {
+  const { data, isLoading, error } = useTasksSummary();
 
-export function TasksSummaryWidget({ completed, pending }: TasksSummaryData) {
   const handleClick = () => {
     console.log("tu link do zadań");
   };
 
-  const data = [
+  const completed = data?.data?.completed || 0;
+  const pending = data?.data?.pending || 0;
+
+  const chartData = [
     { name: "Zrealizowane", value: completed, color: COLORS.completed },
     { name: "Oczekujące", value: pending, color: COLORS.pending },
   ];
@@ -26,58 +27,69 @@ export function TasksSummaryWidget({ completed, pending }: TasksSummaryData) {
 
   return (
     <Widget size="1x1">
-      <div className="flex h-full flex-col justify-between gap-2 sm:gap-3 md:gap-4">
+      <div className="flex h-full flex-col gap-1 sm:gap-2 md:gap-3">
         <h2 className="text-foreground shrink-0 text-xs font-semibold sm:text-sm md:text-sm lg:text-lg xl:text-xl">
           Zadania
         </h2>
-        <div className="relative flex min-h-0 flex-1 items-center justify-center">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius="50%"
-                outerRadius="80%"
-                paddingAngle={2}
-                dataKey="value"
-                strokeWidth={0}
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-          {/* Center label */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-gray-800 sm:text-3xl md:text-4xl">
-              {total}
-            </span>
-            <span className="text-[10px] text-gray-500 sm:text-xs">zadań</span>
-          </div>
+        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden">
+          {isLoading ? (
+            <span className="text-sm text-gray-500">Ładowanie...</span>
+          ) : error ? (
+            <span className="text-sm text-red-600">{error.error}</span>
+          ) : (
+            <div className="w-min-[100%] relative aspect-square h-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius="40%"
+                    outerRadius="90%"
+                    paddingAngle={0}
+                    dataKey="value"
+                    strokeWidth={0}
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+              {/* Center label */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-base font-bold text-gray-800 sm:text-lg md:text-xl lg:text-2xl">
+                  {total}
+                </span>
+                <span className="text-[7px] text-gray-500 sm:text-[8px] md:text-[10px]">
+                  zadań
+                </span>
+              </div>
+            </div>
+          )}
         </div>
         {/* Legend */}
-        <div className="flex justify-center gap-3 text-[10px] sm:gap-4 sm:text-xs">
+        <div className="flex shrink-0 flex-wrap justify-center gap-2 text-[8px] sm:gap-3 sm:text-[10px] md:text-xs">
           <div className="flex items-center gap-1">
             <div
-              className="h-2 w-2 rounded-full sm:h-3 sm:w-3"
+              className="h-2 w-2 shrink-0 rounded-full"
               style={{ backgroundColor: COLORS.completed }}
             />
-            <span className="text-gray-600">{completed} zrealizowane</span>
+            <span className="text-gray-600">{completed} zreal.</span>
           </div>
           <div className="flex items-center gap-1">
             <div
-              className="h-2 w-2 rounded-full sm:h-3 sm:w-3"
+              className="h-2 w-2 shrink-0 rounded-full"
               style={{ backgroundColor: COLORS.pending }}
             />
-            <span className="text-gray-600">{pending} oczekujące</span>
+            <span className="text-gray-600">{pending} oczek.</span>
           </div>
         </div>
         <Button
           onClick={handleClick}
           className="w-full shrink-0 text-xs sm:text-sm"
           size="default"
+          disabled={isLoading}
         >
           Zobacz zadania
         </Button>

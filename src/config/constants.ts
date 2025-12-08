@@ -16,3 +16,8 @@ export const BACKEND_FOR_FRONTEND_URL =
   process.env.BACKEND_FOR_FRONTEND_URL || "http://localhost:3000";
 
 const AUTH_QK = ["auth", "session"] as const;
+
+export const TASK_COLORS = {
+  completed: "#483A2B",
+  pending: "#f59e0b",
+};
