@@ -131,7 +131,7 @@ export async function GET(req: NextRequest) {
 
               if (checkinRes.ok) {
                 const checkinData = await checkinRes.json().catch(() => null);
-                isCheckedIn = checkinData?.status?.isCheckedIn || false;
+                isCheckedIn = checkinData?.checkinDirection === "IN";
               }
             } catch (e) {
               // Ignore check-in errors
