@@ -12,6 +12,8 @@ import { TaskStatus } from "@/config/enums";
 
 import { TaskCard } from "../../tasks/components/task-element";
 import { BackArrow } from "../components/back-arrow";
+import { UserAvailabilityCalendar } from "../components/user-availability-calendar";
+import { useUserAvailability } from "../hooks/use-user-availability";
 import { useUserDetails } from "../hooks/use-user-details";
 import { useUserTasks } from "../hooks/use-user-tasks";
 import { formatRole, getInitials } from "../utils";
@@ -31,9 +33,17 @@ export default function UserDetailsPage() {
     error: tasksError,
   } = useUserTasks({ userId, type: "assigned" });
 
+  const {
+    data: availabilityData,
+    isLoading: isAvailabilityLoading,
+    isError: isAvailabilityError,
+  } = useUserAvailability({ userId });
+
   const todoTasks = (tasksData?.data ?? []).filter(
     (task) => task.status === TaskStatus.TODO,
   );
+
+  const approvedRequests = availabilityData?.data ?? [];
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
@@ -112,38 +122,47 @@ export default function UserDetailsPage() {
               </div>
             </div>
 
-            <section className="overflow-hidden rounded-xl border bg-white shadow-sm">
-              <div className="px-4 py-5 sm:px-6">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Zadania użytkownika
-                </h2>
-                <Link
-                  href={"/tasks"}
-                  className="text-sm text-gray-500 hover:underline"
-                >
-                  Przejdź do zadań
-                </Link>
-              </div>
-              <div className="border-t border-gray-100 px-4 py-6 sm:px-6">
-                <DataStateWrapper
-                  isLoading={isTasksLoading}
-                  isError={isTasksError}
-                  errorMessage={tasksError?.error}
-                  hasData={todoTasks.length > 0}
-                  emptyFallback={
-                    <span className="text-sm text-gray-500">
-                      Brak zadań w statusie TODO.
-                    </span>
-                  }
-                >
-                  <div className="space-y-3">
-                    {todoTasks.map((task) => (
-                      <TaskCard key={task.id} task={task} />
-                    ))}
-                  </div>
-                </DataStateWrapper>
-              </div>
-            </section>
+            <div className="grid gap-6 md:grid-cols-2">
+              <section className="overflow-hidden rounded-xl border bg-white shadow-sm">
+                <div className="px-4 py-5 sm:px-6">
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    Zadania użytkownika
+                  </h2>
+                  <Link
+                    href={"/tasks"}
+                    className="text-sm text-gray-500 hover:underline"
+                  >
+                    Przejdź do zadań
+                  </Link>
+                </div>
+                <div className="border-t border-gray-100 px-4 py-6 sm:px-6">
+                  <DataStateWrapper
+                    isLoading={isTasksLoading}
+                    isError={isTasksError}
+                    errorMessage={tasksError?.error}
+                    hasData={todoTasks.length > 0}
+                    emptyFallback={
+                      <span className="text-sm text-gray-500">
+                        Brak zadań w statusie TODO.
+                      </span>
+                    }
+                  >
+                    <div className="space-y-3">
+                      {todoTasks.map((task) => (
+                        <TaskCard key={task.id} task={task} layout="compact" />
+                      ))}
+                    </div>
+                  </DataStateWrapper>
+                </div>
+              </section>
+
+              {!isAvailabilityLoading && !isAvailabilityError && (
+                <UserAvailabilityCalendar
+                  requests={approvedRequests}
+                  className="h-full"
+                />
+              )}
+            </div>
           </>
         )}
       </DataStateWrapper>

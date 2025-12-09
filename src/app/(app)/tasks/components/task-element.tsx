@@ -31,13 +31,17 @@ const formatDueDate = (
   );
 };
 
+type TaskCardProps = {
+  task: Task;
+  className?: string;
+  layout?: "default" | "compact";
+};
+
 export const TaskCard = ({
   task,
   className,
-}: {
-  task: Task;
-  className?: string;
-}) => {
+  layout = "default",
+}: TaskCardProps) => {
   const formattedDueDate = formatDueDate(task.dueDate);
   const assignee = task.assignee;
   const assigneeName = assignee
@@ -46,6 +50,7 @@ export const TaskCard = ({
   const assigneeInitials = assignee
     ? getInitials(assignee.name, assignee.lastName ?? assignee.surname)
     : null;
+  const isCompact = layout === "compact";
 
   return (
     <div
@@ -62,7 +67,12 @@ export const TaskCard = ({
           </p>
         </div>
 
-        <p className="hidden text-sm text-gray-600 md:flex">
+        <p
+          className={cn(
+            "text-sm text-gray-600",
+            isCompact ? "hidden" : "hidden md:flex",
+          )}
+        >
           {formattedDueDate ?? "Brak terminu"}
         </p>
       </div>
@@ -83,8 +93,15 @@ export const TaskCard = ({
         ) : (
           <span className="text-gray-500">Brak przypisanego użytkownika</span>
         )}
-        <div className="h-1 w-1 rounded-full bg-gray-400 md:hidden" />
-        <p className="md:hidden">{formattedDueDate ?? "Brak terminu"}</p>
+        <div
+          className={cn(
+            "h-1 w-1 rounded-full bg-gray-400",
+            isCompact ? "block" : "md:hidden",
+          )}
+        />
+        <p className={cn(isCompact ? "" : "md:hidden")}>
+          {formattedDueDate ?? "Brak terminu"}
+        </p>
       </div>
     </div>
   );

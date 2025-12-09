@@ -40,7 +40,7 @@ export const TopNavbar = () => {
   };
 
   return (
-    <header className="bg-background fixed top-0 z-40 w-full">
+    <header className="bg-background fixed top-0 z-40 w-full pb-2">
       <div className="mx-auto mt-4 flex h-16 w-full items-center justify-between px-4">
         <Link
           href="/"
