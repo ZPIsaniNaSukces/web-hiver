@@ -6,7 +6,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+import { getInitials } from "@/app/(app)/users/utils";
 import { useAuth } from "@/app/login/hooks/useAuth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -77,6 +79,24 @@ export const MobileNavbar = () => {
             </Link>
           </SheetTitle>
         </SheetHeader>
+        {user && (
+          <Link
+            href={`/users/${user.id}`}
+            className="mt-6 flex items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 transition hover:border-gray-300"
+          >
+            <Avatar className="size-12 border border-white shadow-sm">
+              <AvatarFallback className="text-lg">
+                {getInitials(user.name, user.surname)}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-gray-900">
+                {user.name} {user.surname}
+              </span>
+              <span className="text-xs text-gray-500">Zobacz profil</span>
+            </div>
+          </Link>
+        )}
         <div className="mt-8 flex flex-col justify-center gap-6 px-4">
           {NAV_ITEMS.map((item) => (
             <NavbarItem key={item.href} item={item} activePath={activePath} />

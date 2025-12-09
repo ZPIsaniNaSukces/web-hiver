@@ -25,12 +25,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: "Zespoły", href: "/teams", icon: Users },
       { label: "Zadania", href: "/tasks", icon: ClipboardList },
       { label: "Wnioski", href: "/requests", icon: MailCheck },
-      { label: "Czas pracy", href: "/time", icon: Clock },
     ],
-  },
-  {
-    id: "settings",
-    items: [{ label: "Ustawienia", href: "/settings", icon: Settings }],
   },
 ];
 

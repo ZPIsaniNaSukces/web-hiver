@@ -76,12 +76,13 @@ export const TopNavbar = () => {
                 <LogOut className="size-6" />
               </Button>
             </div>
-
-            <Avatar className="absolute top-2 left-1/2 z-10 h-12 w-12 -translate-x-1/2 ring-1 ring-black/5">
-              <AvatarFallback className="text-2xl">
-                {user ? getInitials(user.name, user.surname) : "JA"}
-              </AvatarFallback>
-            </Avatar>
+            <Link href={`/users/${user?.id || ""}`}>
+              <Avatar className="absolute top-2 left-1/2 z-10 h-12 w-12 -translate-x-1/2 ring-1 ring-black/5">
+                <AvatarFallback className="text-2xl">
+                  {user ? getInitials(user.name, user.surname) : "JA"}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           </div>
         </div>
         <MobileNavbar />

@@ -14,11 +14,20 @@ function isPublicPath(pathname: string) {
   );
 }
 
+function getRequiredRoles(pathname: string) {
+  const match = ROUTE_PERMISSIONS.find(({ pattern }) => pattern.test(pathname));
+  return match?.roles ?? [];
+}
+
 function hasAccess(pathname: string, session: SessionPayload | null): boolean {
   if (isPublicPath(pathname)) return true;
-  const required = ROUTE_PERMISSIONS[pathname] ?? [];
-  if (!session) return false;
-  if (required.length === 0) return true;
+  const required = getRequiredRoles(pathname);
+  if (required.length === 0) {
+    return true;
+  }
+  if (!session) {
+    return false;
+  }
   const userRole = session.user?.role;
   return userRole ? required.includes(userRole) : false;
 }
@@ -62,7 +71,7 @@ export const middleware = (request: NextRequest) => {
     return res;
   }
 
-  if (!hasAccess(`/${pathname.split("/")[1]}`, session)) {
+  if (!hasAccess(pathname, session)) {
     return NextResponse.rewrite(new URL("/error/403", request.url));
   }
 
