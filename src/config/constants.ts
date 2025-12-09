@@ -16,10 +16,6 @@ export type RoutePermission = {
 
 export const ROUTE_PERMISSIONS: RoutePermission[] = [
   {
-    pattern: /^\/dashboard(?:\/|$)/,
-    roles: [Role.ADMIN, Role.MANAGER],
-  },
-  {
     pattern: /^\/users\/add$/,
     roles: [Role.ADMIN],
   },
@@ -30,6 +26,10 @@ export const ROUTE_PERMISSIONS: RoutePermission[] = [
   {
     pattern: /^\/teams\/add$/,
     roles: [Role.ADMIN],
+  },
+  {
+    pattern: /^\/(dashboard|requests|tasks|teams|users)(?:\/|$)/,
+    roles: [Role.ADMIN, Role.MANAGER],
   },
 ];
 export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
