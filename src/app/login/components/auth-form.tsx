@@ -40,7 +40,7 @@ export function AuthForm() {
     login(values, {
       onSuccess: () => {
         toast.success("Zalogowano pomyślnie");
-        router.push("/");
+        router.push("/dashboard");
       },
       onError: (err: unknown) => {
         const e = err as ApiError | undefined;

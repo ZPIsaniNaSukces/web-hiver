@@ -1,37 +1,23 @@
 "use client";
 
+import { AttendanceWidget } from "./components/attendance-widget";
+import { LeaveRequestsWidget } from "./components/leave-requests-widget";
+import { ManagedTeamsWidget } from "./components/managed-teams-widget";
+import { TasksChartWidget } from "./components/tasks-chart-widget";
+import { TasksSummaryWidget } from "./components/tasks-summary-widget";
+import { TeamMembersWidget } from "./components/team-members-widget";
+
 export default function DashboardPage() {
   return (
-    <div className="flex h-full flex-col gap-4 p-4">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <p className="text-muted-foreground">
-        Witaj w panelu głównym aplikacji HiveR.
-      </p>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <div className="bg-card text-card-foreground rounded-xl border p-6 shadow">
-          <div className="flex flex-col space-y-1.5">
-            <h3 className="leading-none font-semibold tracking-tight">
-              Zadania
-            </h3>
-            <p className="text-muted-foreground text-sm">
-              Twoje aktywne zadania
-            </p>
-          </div>
-          <div className="pt-4">
-            <div className="text-2xl font-bold">0</div>
-          </div>
-        </div>
-        <div className="bg-card text-card-foreground rounded-xl border p-6 shadow">
-          <div className="flex flex-col space-y-1.5">
-            <h3 className="leading-none font-semibold tracking-tight">
-              Wnioski
-            </h3>
-            <p className="text-muted-foreground text-sm">Oczekujące wnioski</p>
-          </div>
-          <div className="pt-4">
-            <div className="text-2xl font-bold">0</div>
-          </div>
-        </div>
+    <div className="flex h-full flex-col gap-3 px-6 sm:gap-4 sm:px-6 lg:px-16">
+      <h1 className="shrink-0 text-xl font-bold md:text-2xl">Dashboard</h1>
+      <div className="grid flex-1 auto-rows-fr grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+        <AttendanceWidget />
+        <LeaveRequestsWidget />
+        <TeamMembersWidget />
+        <ManagedTeamsWidget />
+        <TasksSummaryWidget />
+        <TasksChartWidget />
       </div>
     </div>
   );

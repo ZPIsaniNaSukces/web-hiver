@@ -32,8 +32,13 @@ export const ROUTE_PERMISSIONS: RoutePermission[] = [
     roles: [Role.ADMIN, Role.MANAGER],
   },
 ];
-export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
+
+// Environment variables with defaults
+export const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:8000";
 export const BACKEND_FOR_FRONTEND_URL =
-  process.env.BACKEND_FOR_FRONTEND_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_BACKEND_FOR_FRONTEND_URL ?? "http://localhost:3000";
+export const IS_PRODUCTION = process.env.NODE_ENV === "production";
+export const USE_HTTPS = process.env.USE_HTTPS === "true";
 
 const AUTH_QK = ["auth", "session"] as const;

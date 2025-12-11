@@ -8,10 +8,10 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mt-28">
+    <div className="h-screen pt-21">
       <TopNavbar />
       <SideDock />
-      <div className="flex min-h-screen flex-col md:ml-36">
+      <div className="flex min-h-screen flex-col md:ml-28">
         <main className="flex-1">{children}</main>
         <SiteFooter />
       </div>
