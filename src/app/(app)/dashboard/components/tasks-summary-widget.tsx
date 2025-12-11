@@ -6,10 +6,14 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 import { useTasksSummary } from "@/app/(app)/dashboard/hooks/use-tasks-summary";
 import { Button } from "@/components/ui/button";
-import { TASK_COLORS as COLORS } from "@/config/constants";
 
 import { Widget } from "./widget";
 import { WidgetButton } from "./widget-button";
+
+const TASK_COLORS = {
+  completed: "var(--task-done)",
+  pending: "var(--task-in-progress)",
+};
 
 export function TasksSummaryWidget() {
   const { data, isLoading, error } = useTasksSummary();
@@ -18,8 +22,8 @@ export function TasksSummaryWidget() {
   const pending = data?.data?.pending || 0;
 
   const chartData = [
-    { name: "Zrealizowane", value: completed, color: COLORS.completed },
-    { name: "Oczekujące", value: pending, color: COLORS.pending },
+    { name: "Zrealizowane", value: completed, color: TASK_COLORS.completed },
+    { name: "Oczekujące", value: pending, color: TASK_COLORS.pending },
   ];
 
   const total = completed + pending;
@@ -72,14 +76,14 @@ export function TasksSummaryWidget() {
           <div className="flex items-center gap-1">
             <div
               className="h-2 w-2 shrink-0 rounded-full"
-              style={{ backgroundColor: COLORS.completed }}
+              style={{ backgroundColor: TASK_COLORS.completed }}
             />
             <span className="text-gray-600">{completed} zreal.</span>
           </div>
           <div className="flex items-center gap-1">
             <div
               className="h-2 w-2 shrink-0 rounded-full"
-              style={{ backgroundColor: COLORS.pending }}
+              style={{ backgroundColor: TASK_COLORS.pending }}
             />
             <span className="text-gray-600">{pending} oczek.</span>
           </div>

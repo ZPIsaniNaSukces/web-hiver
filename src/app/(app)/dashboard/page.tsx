@@ -1,11 +1,11 @@
 "use client";
 
-import { AttendanceWidget } from "@/components/dashboard/attendance-widget";
-import { LeaveRequestsWidget } from "@/components/dashboard/leave-requests-widget";
-import { ManagedTeamsWidget } from "@/components/dashboard/managed-teams-widget";
-import { TasksChartWidget } from "@/components/dashboard/tasks-chart-widget";
-import { TasksSummaryWidget } from "@/components/dashboard/tasks-summary-widget";
-import { TeamMembersWidget } from "@/components/dashboard/team-members-widget";
+import { AttendanceWidget } from "./components/attendance-widget";
+import { LeaveRequestsWidget } from "./components/leave-requests-widget";
+import { ManagedTeamsWidget } from "./components/managed-teams-widget";
+import { TasksChartWidget } from "./components/tasks-chart-widget";
+import { TasksSummaryWidget } from "./components/tasks-summary-widget";
+import { TeamMembersWidget } from "./components/team-members-widget";
 
 export default function DashboardPage() {
   return (

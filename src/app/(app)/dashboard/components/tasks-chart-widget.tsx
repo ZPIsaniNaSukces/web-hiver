@@ -12,9 +12,13 @@ import {
 } from "recharts";
 
 import { useTasksChart } from "@/app/(app)/dashboard/hooks/use-tasks-chart";
-import { TASK_COLORS as COLORS } from "@/config/constants";
 
 import { Widget } from "./widget";
+
+const TASK_COLORS = {
+  completed: "var(--task-done)",
+  pending: "var(--task-in-progress)",
+};
 
 //formatowanie daty
 function formatDate(dateString: string): string {
@@ -81,18 +85,18 @@ export function TasksChartWidget() {
                   type="monotone"
                   dataKey="completed"
                   name="Zrealizowane"
-                  stroke={COLORS.completed}
+                  stroke={TASK_COLORS.completed}
                   strokeWidth={2}
-                  dot={{ fill: COLORS.completed, strokeWidth: 2, r: 3 }}
+                  dot={{ fill: TASK_COLORS.completed, strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5 }}
                 />
                 <Line
                   type="monotone"
                   dataKey="pending"
                   name="Oczekujące"
-                  stroke={COLORS.pending}
+                  stroke={TASK_COLORS.pending}
                   strokeWidth={2}
-                  dot={{ fill: COLORS.pending, strokeWidth: 2, r: 3 }}
+                  dot={{ fill: TASK_COLORS.pending, strokeWidth: 2, r: 3 }}
                   activeDot={{ r: 5 }}
                 />
               </LineChart>

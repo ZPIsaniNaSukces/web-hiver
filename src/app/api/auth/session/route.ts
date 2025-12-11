@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parse } from "path";
 
-import { AUTH_COOKIE_NAME, BACKEND_URL } from "@/config/constants";
+import {
+  AUTH_COOKIE_NAME,
+  BACKEND_URL,
+  IS_PRODUCTION,
+  USE_HTTPS,
+} from "@/config/constants";
 import { parseCookie } from "@/lib/cookie-utils";
 import { ErrorBody, LoginResponse } from "@/types/auth-types";
 
@@ -48,9 +53,7 @@ export async function POST(req: NextRequest) {
       name: AUTH_COOKIE_NAME,
       value: encodeURIComponent(JSON.stringify(sessionPayload)),
       httpOnly: true,
-      secure:
-        process.env.NODE_ENV === "production" &&
-        process.env.USE_HTTPS === "true",
+      secure: IS_PRODUCTION && USE_HTTPS,
       sameSite: "lax",
       path: "/",
       expires: refreshExp,

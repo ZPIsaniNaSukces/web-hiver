@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { AUTH_COOKIE_NAME, BACKEND_URL } from "@/config/constants";
 import { parseCookie } from "@/lib/cookie-utils";
+import { ErrorBody } from "@/types/auth-types";
 
 export async function GET(req: NextRequest) {
   const rawCookie = req.cookies.get(AUTH_COOKIE_NAME)?.value;
@@ -34,6 +35,30 @@ export async function GET(req: NextRequest) {
     }),
   ]);
 
+  if (!availabilityRes.ok) {
+    let err: ErrorBody = {};
+    try {
+      err = await availabilityRes.json();
+    } catch {}
+    const msg = err.message || "Something went wrong";
+    return NextResponse.json(
+      { error: msg },
+      { status: availabilityRes.status || 400 },
+    );
+  }
+
+  if (!generalRes.ok) {
+    let err: ErrorBody = {};
+    try {
+      err = await generalRes.json();
+    } catch {}
+    const msg = err.message || "Something went wrong";
+    return NextResponse.json(
+      { error: msg },
+      { status: generalRes.status || 400 },
+    );
+  }
+
   const availabilityData = await availabilityRes.json().catch(() => null);
   const generalData = await generalRes.json().catch(() => null);
 
@@ -53,8 +78,5 @@ export async function GET(req: NextRequest) {
     ).length;
   }
 
-  return NextResponse.json(
-    { pendingCount },
-    { status: availabilityRes.ok ? 200 : availabilityRes.status },
-  );
+  return NextResponse.json({ pendingCount }, { status: 200 });
 }
