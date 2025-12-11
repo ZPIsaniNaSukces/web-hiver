@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useDeferredValue, useRef, useState } from "react";
-import { InView } from "react-intersection-observer";
+import { useDeferredValue, useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
+import { useAuth } from "@/app/login/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 import { Input } from "@/components/ui/input";
@@ -14,8 +15,10 @@ import { useUsersInfiniteSearch } from "./hooks/use-users-infinite-search";
 export default function UsersPage() {
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search);
+  const { isAdmin } = useAuth();
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [observerRoot, setObserverRoot] = useState<Element | null>(null);
 
   const {
     data,
@@ -32,10 +35,25 @@ export default function UsersPage() {
   const lastPage = data?.pages[data.pages.length - 1];
   const meta = lastPage?.data.meta;
 
+  const { ref, inView } = useInView({
+    root: observerRoot,
+    rootMargin: "200px",
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage && !isLoading) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, isLoading, fetchNextPage]);
+
   return (
     <div className="h-full flex-1">
       <div
-        ref={scrollRef}
+        ref={(node) => {
+          scrollRef.current = node;
+          setObserverRoot(node);
+        }}
         className="mx-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0"
       >
         <h1 className="text-2xl font-semibold">Pracownicy</h1>
@@ -47,9 +65,11 @@ export default function UsersPage() {
               placeholder="Szukaj po imieniu, mailu itd..."
               className="max-w-md"
             />
-            <Button asChild>
-              <Link href="/users/add">Dodaj</Link>
-            </Button>
+            {isAdmin ? (
+              <Button asChild>
+                <Link href="/users/add">Dodaj</Link>
+              </Button>
+            ) : null}
           </div>
           {meta && (
             <span className="text-xs text-gray-500">
@@ -66,24 +86,13 @@ export default function UsersPage() {
         >
           <UserList users={users} />
 
-          <InView
-            root={scrollRef.current}
-            onChange={(inView) => {
-              if (inView && hasNextPage && !isFetchingNextPage) {
-                fetchNextPage();
-              }
-            }}
-          >
-            {({ ref }) => (
-              <div ref={ref} className="py-4 text-center text-sm text-gray-500">
-                {isFetchingNextPage
-                  ? "Ładowanie kolejnych..."
-                  : hasNextPage
-                    ? "Przescrolluj niżej, żeby załadować więcej"
-                    : "To już wszystko"}
-              </div>
-            )}
-          </InView>
+          <div ref={ref} className="py-4 text-center text-sm text-gray-500">
+            {isFetchingNextPage
+              ? "Ładowanie kolejnych..."
+              : hasNextPage
+                ? "Przescrolluj niżej, żeby załadować więcej"
+                : "To już wszystko"}
+          </div>
         </DataStateWrapper>
       </div>
     </div>

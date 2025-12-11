@@ -12,7 +12,7 @@ export default function RequestsPage() {
   const buckets = data?.data.buckets;
 
   return (
-    <div className="mx-4 mt-8 space-y-10 pb-12 md:mx-0">
+    <div className="mx-4 mt-8 space-y-10 pb-12 md:mx-0 md:mr-4">
       <AwaitingRequestsGrid
         title="Oczekujące wnioski obecności"
         description="Lista wniosków, które nadal czekają na Twoją decyzję."

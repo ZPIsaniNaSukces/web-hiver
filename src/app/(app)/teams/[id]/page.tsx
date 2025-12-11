@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 
 import { BackArrow } from "@/app/(app)/users/components/back-arrow";
 import { formatRole, getInitials } from "@/app/(app)/users/utils";
+import { useAuth } from "@/app/login/hooks/useAuth";
 import {
   Accordion,
   AccordionContent,
@@ -20,6 +21,7 @@ import { useTeamDetails } from "../hooks/use-team-details";
 export default function TeamDetailsPage() {
   const params = useParams<{ id: string }>();
   const teamId = params?.id;
+  const { isAdmin } = useAuth();
 
   const { data, isLoading, isError, error } = useTeamDetails(teamId);
 
@@ -30,7 +32,7 @@ export default function TeamDetailsPage() {
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
       <div className="flex items-center justify-between">
         <BackArrow href="/teams" label="Wróć do listy zespołów" />
-        {teamId && (
+        {teamId && isAdmin && (
           <Button asChild size="sm">
             <Link href={`/teams/${teamId}/edit`}>Edytuj</Link>
           </Button>

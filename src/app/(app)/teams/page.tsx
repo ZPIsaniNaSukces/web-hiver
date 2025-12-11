@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { useAuth } from "@/app/login/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 
@@ -10,6 +11,7 @@ import { useTeams } from "./hooks/use-teams";
 
 export default function TeamsPage() {
   const { data, isLoading, isError, error } = useTeams();
+  const { isAdmin } = useAuth();
 
   const teams = data?.data ?? [];
 
@@ -18,9 +20,11 @@ export default function TeamsPage() {
       <div className="mx-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Zespoły</h1>
-          <Button asChild>
-            <Link href="/teams/add">Dodaj</Link>
-          </Button>
+          {isAdmin ? (
+            <Button asChild>
+              <Link href="/teams/add">Dodaj</Link>
+            </Button>
+          ) : null}
         </div>
         <DataStateWrapper
           isLoading={isLoading}

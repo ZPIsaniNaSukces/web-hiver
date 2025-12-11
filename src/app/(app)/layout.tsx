@@ -1,4 +1,5 @@
 import SideDock from "@/components/navigation/side-navbar/side-navbar";
+import { SiteFooter } from "@/components/navigation/site-footer";
 import { TopNavbar } from "@/components/navigation/top-navbar";
 
 export default function AppLayout({
@@ -10,9 +11,10 @@ export default function AppLayout({
     <div className="h-screen pt-21">
       <TopNavbar />
       <SideDock />
-      <main className="mx-6 md:mr-10 md:ml-44 lg:mr-16 xl:mr-24 2xl:mr-32">
-        {children}
-      </main>
+      <div className="flex min-h-screen flex-col md:ml-36">
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
+      </div>
     </div>
   );
 }

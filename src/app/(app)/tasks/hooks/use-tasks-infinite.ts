@@ -37,7 +37,7 @@ export function useTasksInfinite({
     ApiSuccess<TasksPage>,
     { error: string; status: number }
   >({
-    queryKey: ["tasks", "status", status, limit],
+    queryKey: ["tasks", "status", status],
     initialPageParam: 1,
     queryFn: async ({ pageParam }) => {
       const url = buildUrl(`/api/tasks/status/${status}`, {

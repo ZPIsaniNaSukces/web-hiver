@@ -43,8 +43,12 @@ export function useUsersInfiniteSearch(search: string) {
     },
     getNextPageParam: (lastPage) => {
       const { meta } = lastPage.data;
+      const hasNextExplicit =
+        typeof meta.hasNextPage === "boolean" ? meta.hasNextPage : null;
+      const hasNextDerived = meta.total > meta.page * meta.limit;
+      const hasNext = hasNextExplicit ?? hasNextDerived;
 
-      return meta.hasNextPage ? meta.page + 1 : undefined;
+      return hasNext ? meta.page + 1 : undefined;
     },
   });
 }

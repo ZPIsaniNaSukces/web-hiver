@@ -43,7 +43,9 @@ export async function GET(req: NextRequest) {
   let payload: AvailabilityRequest[] = [];
   try {
     const json = await res.json();
-    payload = Array.isArray(json) ? normalizeRequestUsers(json) : [];
+    payload = Array.isArray(json.requests)
+      ? normalizeRequestUsers(json.requests)
+      : [];
   } catch {}
 
   const categorized = categorizeRequests(payload);

@@ -105,16 +105,16 @@ export const categorizeRequests = <
 
     switch (status) {
       case RequestStatus.APPROVED:
-        buckets.accepted.push(request);
+        buckets.accepted.unshift(request);
         break;
       case RequestStatus.PENDING:
         buckets.pending.push(request);
         break;
       case RequestStatus.REJECTED:
-        buckets.rejected.push(request);
+        buckets.rejected.unshift(request);
         break;
       default:
-        buckets.unknown.push(request);
+        buckets.unknown.unshift(request);
         break;
     }
   });

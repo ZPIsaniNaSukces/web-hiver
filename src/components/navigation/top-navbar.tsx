@@ -40,7 +40,7 @@ export const TopNavbar = () => {
   };
 
   return (
-    <header className="bg-background fixed top-0 z-40 w-full">
+    <header className="bg-background fixed top-0 z-40 w-full pb-2">
       <div className="mx-auto mt-4 flex h-16 w-full items-center justify-between px-4">
         <Link
           href="/"
@@ -76,12 +76,13 @@ export const TopNavbar = () => {
                 <LogOut className="size-6" />
               </Button>
             </div>
-
-            <Avatar className="absolute top-2 left-1/2 z-10 h-12 w-12 -translate-x-1/2 ring-1 ring-black/5">
-              <AvatarFallback className="text-2xl">
-                {user ? getInitials(user.name, user.surname) : "JA"}
-              </AvatarFallback>
-            </Avatar>
+            <Link href={`/users/${user?.id || ""}`}>
+              <Avatar className="absolute top-2 left-1/2 z-10 h-12 w-12 -translate-x-1/2 ring-1 ring-black/5">
+                <AvatarFallback className="text-2xl">
+                  {user ? getInitials(user.name, user.surname) : "JA"}
+                </AvatarFallback>
+              </Avatar>
+            </Link>
           </div>
         </div>
         <MobileNavbar />
