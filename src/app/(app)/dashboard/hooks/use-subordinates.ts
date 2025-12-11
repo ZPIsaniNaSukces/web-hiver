@@ -18,6 +18,7 @@ export interface SubordinateData {
 
 export interface SubordinatesData {
   subordinates: SubordinateData[];
+  managerTeamId: number | null;
 }
 
 export function useSubordinates() {

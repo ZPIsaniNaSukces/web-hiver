@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 import { useTasksSummary } from "@/app/(app)/dashboard/hooks/use-tasks-summary";
@@ -7,13 +9,10 @@ import { Button } from "@/components/ui/button";
 import { TASK_COLORS as COLORS } from "@/config/constants";
 
 import { Widget } from "./widget";
+import { WidgetButton } from "./widget-button";
 
 export function TasksSummaryWidget() {
   const { data, isLoading, error } = useTasksSummary();
-
-  const handleClick = () => {
-    console.log("tu link do zadań");
-  };
 
   const completed = data?.data?.completed || 0;
   const pending = data?.data?.pending || 0;
@@ -85,14 +84,7 @@ export function TasksSummaryWidget() {
             <span className="text-gray-600">{pending} oczek.</span>
           </div>
         </div>
-        <Button
-          onClick={handleClick}
-          className="w-full shrink-0 text-xs sm:text-sm"
-          size="default"
-          disabled={isLoading}
-        >
-          Zobacz zadania
-        </Button>
+        <WidgetButton href="/tasks" isLoading={isLoading} />
       </div>
     </Widget>
   );

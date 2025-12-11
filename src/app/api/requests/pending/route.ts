@@ -12,28 +12,49 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  // Backend doesn't have /requests/pending endpoint yet
-  // Using /requests/availability and filtering pending requests for managers
-  const backendUrl = new URL("/requests/availability", BACKEND_URL);
+  // Fetch both availability and general requests
+  const availabilityUrl = new URL("/requests/availability", BACKEND_URL);
+  const generalUrl = new URL("/requests/general", BACKEND_URL);
 
-  const res = await fetch(backendUrl, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Accept: "application/json",
-    },
-    cache: "no-store",
-  });
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    Accept: "application/json",
+  };
 
-  const data = await res.json().catch(() => null);
+  const [availabilityRes, generalRes] = await Promise.all([
+    fetch(availabilityUrl, {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    }),
+    fetch(generalUrl, {
+      method: "GET",
+      headers,
+      cache: "no-store",
+    }),
+  ]);
 
-  // Filter for pending requests and count them
-  if (Array.isArray(data)) {
-    const pendingCount = data.filter(
+  const availabilityData = await availabilityRes.json().catch(() => null);
+  const generalData = await generalRes.json().catch(() => null);
+
+  let pendingCount = 0;
+
+  // Count pending availability requests (from requests array in response)
+  if (availabilityData?.requests && Array.isArray(availabilityData.requests)) {
+    pendingCount += availabilityData.requests.filter(
       (req: any) => req.status === "PENDING",
     ).length;
-    return NextResponse.json({ pendingCount }, { status: res.status });
   }
 
-  return NextResponse.json({ pendingCount: 0 }, { status: res.status });
+  // Count pending general requests
+  if (Array.isArray(generalData)) {
+    pendingCount += generalData.filter(
+      (req: any) => req.status === "PENDING",
+    ).length;
+  }
+
+  return NextResponse.json(
+    { pendingCount },
+    { status: availabilityRes.ok ? 200 : availabilityRes.status },
+  );
 }

@@ -169,8 +169,17 @@ export async function GET(req: NextRequest) {
       return a.name.localeCompare(b.name);
     });
 
-    return NextResponse.json({ subordinates: sorted }, { status: res.status });
+    // Get manager's first team ID for the link
+    const managerTeamId = data?.teams?.[0]?.id || null;
+
+    return NextResponse.json(
+      { subordinates: sorted, managerTeamId },
+      { status: res.status },
+    );
   }
 
-  return NextResponse.json({ subordinates: [] }, { status: res.status });
+  return NextResponse.json(
+    { subordinates: [], managerTeamId: null },
+    { status: res.status },
+  );
 }

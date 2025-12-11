@@ -1,18 +1,19 @@
 "use client";
 
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+
 import { useSubordinates } from "@/app/(app)/dashboard/hooks/use-subordinates";
 import { Button } from "@/components/ui/button";
 
 import { Widget } from "./widget";
+import { WidgetButton } from "./widget-button";
 
 export function TeamMembersWidget() {
   const { data, isLoading, error } = useSubordinates();
 
-  const handleClick = () => {
-    console.log("tu link do teamu");
-  };
-
   const subordinates = data?.data?.subordinates ?? [];
+  const managerTeamId = data?.data?.managerTeamId;
 
   const getStatusLabel = (status: "available" | "unavailable" | "on-leave") => {
     switch (status) {
@@ -69,14 +70,10 @@ export function TeamMembersWidget() {
             ))
           )}
         </div>
-        <Button
-          onClick={handleClick}
-          className="w-full shrink-0 text-xs sm:text-sm"
-          size="default"
-          disabled={isLoading}
-        >
-          Zobacz więcej
-        </Button>
+        <WidgetButton
+          href={managerTeamId ? `/teams/${managerTeamId}` : "/teams"}
+          isLoading={isLoading}
+        />
       </div>
     </Widget>
   );

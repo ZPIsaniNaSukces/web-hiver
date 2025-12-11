@@ -4,6 +4,7 @@ import { useRequestsPending } from "@/app/(app)/dashboard/hooks/use-requests-pen
 import { Button } from "@/components/ui/button";
 
 import { Widget } from "./widget";
+import { WidgetButton } from "./widget-button";
 
 export function LeaveRequestsWidget() {
   const { data, isLoading, error } = useRequestsPending();
@@ -31,14 +32,7 @@ export function LeaveRequestsWidget() {
             </p>
           )}
         </div>
-        <Button
-          onClick={handleClick}
-          className="w-full shrink-0 text-xs sm:text-sm"
-          size="default"
-          disabled={isLoading}
-        >
-          Rozpatrz wnioski
-        </Button>
+        <WidgetButton href="/requests" isLoading={isLoading} />
       </div>
     </Widget>
   );

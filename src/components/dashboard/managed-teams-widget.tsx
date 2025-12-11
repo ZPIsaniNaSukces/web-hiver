@@ -6,6 +6,7 @@ import { useManagedTeams } from "@/app/(app)/dashboard/hooks/use-managed-teams";
 import { Button } from "@/components/ui/button";
 
 import { Widget } from "./widget";
+import { WidgetButton } from "./widget-button";
 
 export function ManagedTeamsWidget() {
   const router = useRouter();
@@ -15,10 +16,6 @@ export function ManagedTeamsWidget() {
 
   const handleTeamClick = (teamId: string) => {
     router.push(`/teams/${teamId}`);
-  };
-
-  const handleViewAllClick = () => {
-    router.push("/teams");
   };
 
   return (
@@ -49,14 +46,7 @@ export function ManagedTeamsWidget() {
             ))
           )}
         </div>
-        <Button
-          onClick={handleViewAllClick}
-          className="w-full shrink-0 text-xs sm:text-sm"
-          size="default"
-          disabled={isLoading}
-        >
-          Zobacz zespoły
-        </Button>
+        <WidgetButton href="/teams" isLoading={isLoading} />
       </div>
     </Widget>
   );
