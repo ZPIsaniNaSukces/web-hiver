@@ -17,7 +17,7 @@ export default function TeamsPage() {
 
   return (
     <div className="h-full flex-1">
-      <div className="mx-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0">
+      <div className="mx-4 mt-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Zespoły</h1>
           {isAdmin ? (

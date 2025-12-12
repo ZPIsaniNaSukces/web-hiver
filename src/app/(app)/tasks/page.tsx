@@ -176,7 +176,7 @@ export default function TasksPage() {
       <div className="h-full flex-1">
         <div
           ref={scrollRef}
-          className="mx-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0"
+          className="mx-4 mt-4 h-full space-y-4 overflow-y-auto md:mr-8 md:ml-0"
         >
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Zadania</h1>
