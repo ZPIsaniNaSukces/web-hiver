@@ -11,7 +11,7 @@ type BackArrowProps = {
 };
 
 export const BackArrow = ({
-  href = "/users",
+  href = "/company-members",
   label = "Wróć do listy",
   className,
 }: BackArrowProps) => {

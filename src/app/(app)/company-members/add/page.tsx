@@ -90,13 +90,15 @@ export default function AddUserPage() {
 
         const createdUserId = response?.data?.id;
         if (createdUserId) {
-          router.push(`/users/${createdUserId}`);
+          router.push(`/company-members/${createdUserId}`);
         } else {
-          router.push("/users");
+          router.push("/company-members");
         }
       },
-      onError: (error) => {
-        toast.error(error?.error ?? "Nie udało się dodać użytkownika");
+      onError: (error: any) => {
+        const errorMessage =
+          error?.error || error?.message || "Nie udało się dodać użytkownika";
+        toast.error(errorMessage);
       },
     });
   };

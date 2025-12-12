@@ -215,7 +215,7 @@ export default function EditUserPage() {
       {
         onSuccess: (response) => {
           toast.success("Dane użytkownika zostały zaktualizowane");
-          router.push(`/users/${response?.data?.id ?? userId}`);
+          router.push(`/company-members/${response?.data?.id ?? userId}`);
         },
         onError: (mutationError) => {
           toast.error(
@@ -229,7 +229,7 @@ export default function EditUserPage() {
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
       <BackArrow
-        href={`/users/${userId ?? ""}`}
+        href={`/company-members/${userId ?? ""}`}
         label="Wróć do szczegółów pracownika"
       />
       <div className="space-y-2">

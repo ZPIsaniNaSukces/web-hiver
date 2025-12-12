@@ -12,7 +12,7 @@ type UserRowProps = {
 };
 
 function UserRow({ user }: UserRowProps) {
-  const href = `/users/${user.id}`;
+  const href = `/company-members/${user.id}`;
 
   return (
     <li className="grid grid-cols-1 gap-4 px-6 py-4 text-sm text-gray-700 sm:grid-cols-[minmax(0,2fr)_minmax(0,2fr)_minmax(0,1fr)_auto] sm:items-center">
