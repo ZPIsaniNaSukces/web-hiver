@@ -65,7 +65,7 @@ export const TopNavbar = () => {
             </p>
           </div>
           <div className="group relative h-16 w-16">
-            <div className="absolute top-0 left-0 h-16 w-16 rounded-[2rem] bg-white shadow transition-[height] duration-300 group-focus-within:h-32 group-hover:h-32">
+            <div className="absolute top-0 left-0 h-16 w-16 rounded-4xl bg-white shadow transition-[height] duration-300 group-focus-within:h-32 group-hover:h-32">
               <Button
                 variant="ghost"
                 size="icon"
