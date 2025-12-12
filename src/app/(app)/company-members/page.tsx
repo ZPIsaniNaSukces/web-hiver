@@ -30,10 +30,10 @@ export default function UsersPage() {
     isFetchingNextPage,
   } = useUsersInfiniteSearch(deferredSearch);
 
-  const users = data?.pages.flatMap((page) => page.data.data) ?? [];
+  const users = data?.pages.flatMap((page) => page?.data?.data ?? []) ?? [];
 
   const lastPage = data?.pages[data.pages.length - 1];
-  const meta = lastPage?.data.meta;
+  const meta = lastPage?.data?.meta;
 
   const { ref, inView } = useInView({
     root: observerRoot,
@@ -67,7 +67,7 @@ export default function UsersPage() {
             />
             {isAdmin ? (
               <Button asChild>
-                <Link href="/users/add">Dodaj</Link>
+                <Link href="/company-members/add">Dodaj</Link>
               </Button>
             ) : null}
           </div>

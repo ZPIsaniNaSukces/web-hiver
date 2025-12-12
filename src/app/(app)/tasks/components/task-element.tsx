@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Task } from "@/types/task-types";
 
-import { getInitials } from "../../users/utils";
+import { getInitials } from "../../company-members/utils";
 
 const formatDueDate = (
   dueDate: Task["dueDate"] | string | null | undefined,
@@ -82,7 +82,7 @@ export const TaskCard = ({
       <div className="flex flex-wrap items-center gap-3 text-xs text-gray-600">
         {assignee && assigneeName ? (
           <Link
-            href={`/users/${assignee.id}`}
+            href={`/company-members/${assignee.id}`}
             className="flex items-center gap-2"
           >
             <Avatar className="size-6">

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { getInitials } from "@/app/(app)/users/utils";
+import { getInitials } from "@/app/(app)/company-members/utils";
 import { useAuth } from "@/app/login/hooks/useAuth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -81,7 +81,7 @@ export const MobileNavbar = () => {
         </SheetHeader>
         {user && (
           <Link
-            href={`/users/${user.id}`}
+            href={`/company-members/${user.id}`}
             className="mt-6 flex items-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 transition hover:border-gray-300"
           >
             <Avatar className="size-12 border border-white shadow-sm">

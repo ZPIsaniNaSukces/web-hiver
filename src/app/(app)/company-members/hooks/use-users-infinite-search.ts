@@ -42,6 +42,9 @@ export function useUsersInfiniteSearch(search: string) {
       return jsonFetch<UsersPage>(url);
     },
     getNextPageParam: (lastPage) => {
+      if (!lastPage?.data?.meta) {
+        return undefined;
+      }
       const { meta } = lastPage.data;
       const hasNextExplicit =
         typeof meta.hasNextPage === "boolean" ? meta.hasNextPage : null;

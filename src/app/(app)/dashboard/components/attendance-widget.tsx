@@ -22,7 +22,7 @@ export function AttendanceWidget() {
       <div className="flex h-full min-h-0 flex-col gap-2 sm:gap-3 md:gap-4">
         <h2 className="text-foreground shrink-0 text-xs font-semibold sm:text-sm md:text-sm lg:text-lg xl:text-xl">
           Obecność (aktualnie dostępne{" "}
-          {data?.data.find((d) => d.isCurrentHour)?.count ?? 0} osób)
+          {data?.data?.find((d) => d.isCurrentHour)?.count ?? 0} osób)
         </h2>
         <div className="min-h-[180px] w-full flex-1 sm:min-h-[200px] md:min-h-0">
           {isLoading && (

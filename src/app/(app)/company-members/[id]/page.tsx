@@ -51,7 +51,7 @@ export default function UserDetailsPage() {
         <BackArrow />
         {userId && isAdmin && (
           <Button asChild size="sm">
-            <Link href={`/users/${userId}/edit`}>Edytuj</Link>
+            <Link href={`/company-members/${userId}/edit`}>Edytuj</Link>
           </Button>
         )}
       </div>
@@ -99,7 +99,7 @@ export default function UserDetailsPage() {
                   value={
                     user.boss ? (
                       <Link
-                        href={`/users/${user.boss.id}`}
+                        href={`/company-members/${user.boss.id}`}
                         className="hover:underline"
                       >
                         {user.boss?.name} {user.boss?.surname}

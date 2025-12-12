@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-import { BackArrow } from "@/app/(app)/users/components/back-arrow";
-import { formatRole, getInitials } from "@/app/(app)/users/utils";
+import { BackArrow } from "@/app/(app)/company-members/components/back-arrow";
+import { formatRole, getInitials } from "@/app/(app)/company-members/utils";
 import { useAuth } from "@/app/login/hooks/useAuth";
 import {
   Accordion,

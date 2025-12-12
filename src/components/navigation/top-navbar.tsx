@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { getInitials } from "@/app/(app)/users/utils";
+import { getInitials } from "@/app/(app)/company-members/utils";
 import { useAuth } from "@/app/login/hooks/useAuth";
 
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -76,7 +76,7 @@ export const TopNavbar = () => {
                 <LogOut className="size-6" />
               </Button>
             </div>
-            <Link href={`/users/${user?.id || ""}`}>
+            <Link href={`/company-members/${user?.id || ""}`}>
               <Avatar className="absolute top-2 left-1/2 z-10 h-12 w-12 -translate-x-1/2 ring-1 ring-black/5">
                 <AvatarFallback className="text-2xl">
                   {user ? getInitials(user.name, user.surname) : "JA"}

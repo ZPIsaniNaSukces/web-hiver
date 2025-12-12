@@ -16,7 +16,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "primary",
     items: [
       { label: "Strona główna", href: "/dashboard", icon: Home },
-      { label: "Pracownicy", href: "/users", icon: User },
+      { label: "Pracownicy", href: "/company-members", icon: User },
     ],
   },
   {
@@ -32,6 +32,6 @@ export const NAV_GROUPS: NavGroup[] = [
 export const NAV_ITEMS: NavItem[] = NAV_GROUPS.flatMap((group) => group.items);
 
 export const USERS_LAYOUT_NAV_ITEMS: NavItem[] = [
-  { label: "Pracownicy", href: "/users", icon: Users },
-  { label: "Zespoły", href: "/users/teams", icon: Users },
+  { label: "Pracownicy", href: "/company-members", icon: Users },
+  { label: "Zespoły", href: "/teams", icon: Users },
 ];

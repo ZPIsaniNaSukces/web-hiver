@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { BackArrow } from "@/app/(app)/users/components/back-arrow";
+import { BackArrow } from "@/app/(app)/company-members/components/back-arrow";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";

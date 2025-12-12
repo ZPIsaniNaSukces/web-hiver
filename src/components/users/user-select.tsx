@@ -4,8 +4,8 @@ import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { InView } from "react-intersection-observer";
 
-import { useUsersInfiniteSearch } from "@/app/(app)/users/hooks/use-users-infinite-search";
-import { formatRole, getInitials } from "@/app/(app)/users/utils";
+import { useUsersInfiniteSearch } from "@/app/(app)/company-members/hooks/use-users-infinite-search";
+import { formatRole, getInitials } from "@/app/(app)/company-members/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -70,7 +70,7 @@ export function UserSelect(props: UserSelectProps) {
     useUsersInfiniteSearch(open ? deferredSearch : "");
 
   const users = useMemo(
-    () => data?.pages.flatMap((page) => page.data.data) ?? [],
+    () => data?.pages.flatMap((page) => page?.data?.data ?? []) ?? [],
     [data],
   );
 

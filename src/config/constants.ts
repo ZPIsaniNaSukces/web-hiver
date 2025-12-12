@@ -15,25 +15,26 @@ export type RoutePermission = {
 };
 
 export const ROUTE_PERMISSIONS: RoutePermission[] = [
+  // Specific Admin-only routes (must come first)
   {
-    pattern: /^\/users\/add$/,
+    pattern: /^\/company-members\/add$/,
     roles: [Role.ADMIN],
   },
   {
-    pattern: /^\/users\/[\w-]+\/edit$/,
+    pattern: /^\/company-members\/[\w-]+\/edit$/,
     roles: [Role.ADMIN],
   },
   {
     pattern: /^\/teams\/add$/,
     roles: [Role.ADMIN],
   },
+  // General access for Admin and Manager to all app sections
   {
-    pattern: /^\/(dashboard|requests|tasks|teams|users)(?:\/|$)/,
+    pattern: /^\/(dashboard|requests|tasks|teams|company-members)(?:\/|$)/,
     roles: [Role.ADMIN, Role.MANAGER],
   },
 ];
 
-// Environment variables with defaults
 export const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:8000";
 export const BACKEND_FOR_FRONTEND_URL =
