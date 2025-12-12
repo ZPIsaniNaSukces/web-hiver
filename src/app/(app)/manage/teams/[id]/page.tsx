@@ -29,7 +29,7 @@ export default function TeamDetailsPage() {
   const members = team?.users ?? [];
 
   return (
-    <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
+    <div className="mx-4 mt-4 space-y-6 md:mr-8 md:ml-0">
       <div className="flex items-center justify-between">
         <BackArrow href="/manage/teams" label="Wróć do listy zespołów" />
         {teamId && isAdmin && (
