@@ -3,11 +3,10 @@ import { CSS } from "@dnd-kit/utilities";
 import Link from "next/link";
 import { CSSProperties } from "react";
 
+import { getInitials } from "@/app/(app)/company-members/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Task } from "@/types/task-types";
-
-import { getInitials } from "../../company-members/utils";
 
 const formatDueDate = (
   dueDate: Task["dueDate"] | string | null | undefined,

@@ -32,7 +32,7 @@ export function LeaveRequestsWidget() {
             </p>
           )}
         </div>
-        <WidgetButton href="/requests" isLoading={isLoading} />
+        <WidgetButton href="/manage/requests" isLoading={isLoading} />
       </div>
     </Widget>
   );

@@ -14,7 +14,7 @@ import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-import { useUpdateTask } from "@/app/(app)/tasks/hooks/use-update-task";
+import { useUpdateTask } from "@/app/(app)/manage/tasks/hooks/use-update-task";
 import { Button } from "@/components/ui/button";
 import { TaskStatus } from "@/config/enums";
 import type { ApiSuccess } from "@/lib/fetch";
@@ -181,7 +181,7 @@ export default function TasksPage() {
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-semibold">Zadania</h1>
             <Button asChild>
-              <Link href="/tasks/add">Dodaj</Link>
+              <Link href="/manage/tasks/add">Dodaj</Link>
             </Button>
           </div>
           <div className="space-y-4">

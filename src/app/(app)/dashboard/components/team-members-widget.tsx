@@ -71,7 +71,9 @@ export function TeamMembersWidget() {
           )}
         </div>
         <WidgetButton
-          href={managerTeamId ? `/teams/${managerTeamId}` : "/teams"}
+          href={
+            managerTeamId ? `/manage/teams/${managerTeamId}` : "/manage/teams"
+          }
           isLoading={isLoading}
         />
       </div>

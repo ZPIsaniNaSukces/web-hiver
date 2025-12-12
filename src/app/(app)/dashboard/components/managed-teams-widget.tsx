@@ -15,7 +15,7 @@ export function ManagedTeamsWidget() {
   const teams = data?.data?.teams ?? [];
 
   const handleTeamClick = (teamId: string) => {
-    router.push(`/teams/${teamId}`);
+    router.push(`/manage/teams/${teamId}`);
   };
 
   return (
@@ -46,7 +46,7 @@ export function ManagedTeamsWidget() {
             ))
           )}
         </div>
-        <WidgetButton href="/teams" isLoading={isLoading} />
+        <WidgetButton href="/manage/teams" isLoading={isLoading} />
       </div>
     </Widget>
   );

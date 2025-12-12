@@ -146,7 +146,7 @@ export default function AddTaskPage() {
       onSuccess: () => {
         toast.success("Zadanie zostało dodane");
         resetForm();
-        router.push("/tasks");
+        router.push("/manage/tasks");
       },
       onError: (error) => {
         toast.error(error?.error ?? "Nie udało się dodać zadania");
@@ -166,7 +166,7 @@ export default function AddTaskPage() {
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
-      <BackArrow href="/tasks" label="Wróć do listy zadań" />
+      <BackArrow href="/manage/tasks" label="Wróć do listy zadań" />
       <div className="space-y-2">
         <h1 className="text-2xl font-semibold">Dodaj zadanie</h1>
         <p className="text-sm text-gray-500">

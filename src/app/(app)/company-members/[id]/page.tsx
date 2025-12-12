@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { DataStateWrapper } from "@/components/ui/data-state-wrapper";
 import { TaskStatus } from "@/config/enums";
 
-import { TaskCard } from "../../tasks/components/task-element";
+import { TaskCard } from "../../manage/tasks/components/task-element";
 import { BackArrow } from "../components/back-arrow";
 import { UserAvailabilityCalendar } from "../components/user-availability-calendar";
 import { useUserAvailability } from "../hooks/use-user-availability";
@@ -129,7 +129,7 @@ export default function UserDetailsPage() {
                     Zadania użytkownika
                   </h2>
                   <Link
-                    href={"/tasks"}
+                    href={"/manage/tasks"}
                     className="text-sm text-gray-500 hover:underline"
                   >
                     Przejdź do zadań

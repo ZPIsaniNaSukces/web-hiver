@@ -48,7 +48,7 @@ export function TeamRow({ team }: TeamRowProps) {
           className="text-amber-500 transition hover:text-amber-600"
           aria-label={`Przejdź do szczegółów zespołu ${team.name}`}
         >
-          <Link href={`/teams/${team.id}`}>
+          <Link href={`/manage/teams/${team.id}`}>
             <ChevronRight className="size-4" />
           </Link>
         </Button>

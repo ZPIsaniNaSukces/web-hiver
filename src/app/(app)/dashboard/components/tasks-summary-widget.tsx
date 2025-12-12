@@ -88,7 +88,7 @@ export function TasksSummaryWidget() {
             <span className="text-gray-600">{pending} oczek.</span>
           </div>
         </div>
-        <WidgetButton href="/tasks" isLoading={isLoading} />
+        <WidgetButton href="/manage/tasks" isLoading={isLoading} />
       </div>
     </Widget>
   );

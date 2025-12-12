@@ -31,10 +31,10 @@ export default function TeamDetailsPage() {
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
       <div className="flex items-center justify-between">
-        <BackArrow href="/teams" label="Wróć do listy zespołów" />
+        <BackArrow href="/manage/teams" label="Wróć do listy zespołów" />
         {teamId && isAdmin && (
           <Button asChild size="sm">
-            <Link href={`/teams/${teamId}/edit`}>Edytuj</Link>
+            <Link href={`/manage/teams/${teamId}/edit`}>Edytuj</Link>
           </Button>
         )}
       </div>

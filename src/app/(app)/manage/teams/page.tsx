@@ -22,7 +22,7 @@ export default function TeamsPage() {
           <h1 className="text-2xl font-semibold">Zespoły</h1>
           {isAdmin ? (
             <Button asChild>
-              <Link href="/teams/add">Dodaj</Link>
+              <Link href="/manage/teams/add">Dodaj</Link>
             </Button>
           ) : null}
         </div>

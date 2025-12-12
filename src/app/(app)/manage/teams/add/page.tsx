@@ -95,9 +95,9 @@ export default function AddTeamPage() {
 
         const createdTeamId = response?.data?.id;
         if (createdTeamId) {
-          router.push(`/teams/${createdTeamId}`);
+          router.push(`/manage/teams/${createdTeamId}`);
         } else {
-          router.push("/teams");
+          router.push("/manage/teams");
         }
       },
       onError: (error) => {
@@ -118,7 +118,7 @@ export default function AddTeamPage() {
 
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
-      <BackArrow href="/teams" label="Wróć do listy zespołów" />
+      <BackArrow href="/manage/teams" label="Wróć do listy zespołów" />
       <div className="space-y-2">
         <h1 className="text-2xl font-semibold">Dodaj zespół</h1>
         <p className="text-sm text-gray-500">

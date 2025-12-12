@@ -25,12 +25,12 @@ export const ROUTE_PERMISSIONS: RoutePermission[] = [
     roles: [Role.ADMIN],
   },
   {
-    pattern: /^\/teams\/add$/,
+    pattern: /^\/manage\/teams\/add$/,
     roles: [Role.ADMIN],
   },
   // General access for Admin and Manager to all app sections
   {
-    pattern: /^\/(dashboard|requests|tasks|teams|company-members)(?:\/|$)/,
+    pattern: /^\/(dashboard|manage|company-members)(?:\/|$)/,
     roles: [Role.ADMIN, Role.MANAGER],
   },
 ];

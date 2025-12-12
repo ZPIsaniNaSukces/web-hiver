@@ -116,7 +116,7 @@ export default function EditTeamPage() {
       {
         onSuccess: (response) => {
           toast.success("Zespół został zaktualizowany");
-          router.push(`/teams/${response?.data?.id ?? teamId}`);
+          router.push(`/manage/teams/${response?.data?.id ?? teamId}`);
         },
         onError: (mutationError) => {
           toast.error(
@@ -130,7 +130,7 @@ export default function EditTeamPage() {
   return (
     <div className="mx-4 space-y-6 md:mr-8 md:ml-0">
       <BackArrow
-        href={`/teams/${teamId ?? ""}`}
+        href={`/manage/teams/${teamId ?? ""}`}
         label="Wróć do szczegółów zespołu"
       />
       <div className="space-y-2">

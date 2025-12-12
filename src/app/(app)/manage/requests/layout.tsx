@@ -7,8 +7,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <h1 className="ml-4 text-2xl font-semibold md:ml-0">Wnioski</h1>
         <LocalNavbar
           hrefs={[
-            { href: "/requests", label: "Dostępność" },
-            { href: "/requests/general", label: "Ogólne" },
+            { href: "/manage/requests", label: "Dostępność" },
+            { href: "/manage/requests/general", label: "Ogólne" },
           ]}
         />
       </div>
