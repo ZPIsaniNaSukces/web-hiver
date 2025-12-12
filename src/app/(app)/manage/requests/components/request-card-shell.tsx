@@ -23,7 +23,7 @@ export const RequestCardShell = ({
   return (
     <article
       className={cn(
-        "border-border bg-card/50 rounded-2xl border p-4 shadow-sm backdrop-blur",
+        "border-border rounded-2xl border bg-white p-4 shadow-sm backdrop-blur",
         className,
       )}
     >
